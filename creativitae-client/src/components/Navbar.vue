@@ -1,4 +1,6 @@
-<script></script>
+<script>
+
+</script>
 
 <template>
   <!-- Navbar -->
@@ -36,6 +38,7 @@
 
     <!-- Icon Menu Section -->
     <div class="flex items-center space-x-5">
+      <a href="" class="block text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" @click.prevent="$router.push('/getPremium')">Get Premium</a>
       <!-- Register -->
       <a class="flex text-gray-600 hover:text-blue-500 cursor-pointer transition-colors duration-300">
 

@@ -1,12 +1,26 @@
-import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import axios from 'axios'
+import Swal from 'sweetalert2'
 
-export const useCounterStore = defineStore('counter', () => {
-  const count = ref(0)
-  const doubleCount = computed(() => count.value * 2)
-  function increment() {
-    count.value++
+export const useAppStore = defineStore('app', {
+  state: () => ({
+    payment: {}
+  }),
+
+  getters: {},
+  actions: {
+    async xenditPayment(){
+      try {
+        const data = await axios ({
+          method: 'POST',
+          url: `http://localhost:4000/xendit`
+        })
+        this.payment = data
+        // this.statusTemplate()
+      } catch (error) {
+        console.log(error.response.data);
+      }
+    }
   }
-
-  return { count, doubleCount, increment }
 })
+
