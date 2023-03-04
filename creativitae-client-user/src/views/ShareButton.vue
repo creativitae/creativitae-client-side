@@ -12,7 +12,6 @@
 
 <script>
   import { SLinkedIn } from 'vue-socials'
-  
 
   export default {
     name: 'SLinkedInSharing',
