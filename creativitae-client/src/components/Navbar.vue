@@ -8,28 +8,29 @@
     <!-- Logo Container -->
     <div class="flex items-center">
       <!-- Logo -->
-      <a class="cursor-pointer">
-        <h3 class="text-2xl font-medium text-blue-500">
-          LOGO.JPG
-        </h3>
+    <a class="cursor-pointer">
+      <!-- <h3 class="text-2xl font-medium text-theme-red">
+                                LOGO.JPG
+                              </h3> -->
+        <img src="/images/creativitae-logo-full-curved.png" class="w-full h-[50px] drop-shadow-md" />
       </a>
     </div>
 
     <!-- Links Section -->
     <div class="items-center hidden space-x-8 lg:flex">
-      <a class="flex text-gray-600 hover:text-blue-500 cursor-pointer transition-colors duration-300">
+      <a class="flex text-gray-600 hover:text-theme-red cursor-pointer transition-colors duration-300">
         Home
       </a>
 
-      <a class="flex text-gray-600 hover:text-blue-500 cursor-pointer transition-colors duration-300">
+      <a class="flex text-gray-600 hover:text-theme-red cursor-pointer transition-colors duration-300">
         About
       </a>
 
-      <a class="flex text-gray-600 hover:text-blue-500 cursor-pointer transition-colors duration-300">
+      <a class="flex text-gray-600 hover:text-theme-red cursor-pointer transition-colors duration-300">
         Premium Membership
       </a>
 
-      <a class="flex text-gray-600 hover:text-blue-500 cursor-pointer transition-colors duration-300">
+      <a class="flex text-gray-600 hover:text-theme-red cursor-pointer transition-colors duration-300">
         Contact
       </a>
     </div>
@@ -37,7 +38,7 @@
     <!-- Icon Menu Section -->
     <div class="flex items-center space-x-5">
       <!-- Register -->
-      <a class="flex text-gray-600 hover:text-blue-500 cursor-pointer transition-colors duration-300">
+      <a class="flex text-gray-600 hover:text-theme-red cursor-pointer transition-colors duration-300">
 
         <svg class="fill-current h-5 w-5 mr-2 mt-0.5" xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24">
@@ -49,7 +50,7 @@
       </a>
 
       <!-- Login -->
-      <a class="flex text-gray-600 hover:text-blue-500 cursor-pointer transition-colors duration-300">
+      <a class="flex text-gray-600 hover:text-theme-red cursor-pointer transition-colors duration-300">
 
         <svg class="fill-current h-5 w-5 mr-2 mt-0.5" xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24">

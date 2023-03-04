@@ -1,4 +1,3 @@
-
 <script>
 import { mapActions, mapState, mapWritableState } from 'pinia';
 import { useMainStore } from '../stores/main';
@@ -7,16 +6,19 @@ export default {
   data() {
     return {
       formData: {
+        username: '',
         email: '',
-        password: ''
+        password: '',
+        address: '',
+        phoneNumber: ''
       },
       showPassword: false
     }
   },
   methods: {
-    ...mapActions(useMainStore, ['doLogin']),
-    login(formData) {
-      this.doLogin(formData)
+    ...mapActions(useMainStore, ['doRegister']),
+    register(formData) {
+      this.doRegister(formData)
     },
     toggle() {
       this.showPassword = this.showPassword ? false : true;
@@ -30,61 +32,68 @@ export default {
   <div class="bg-red-400 bottom-0 leading-5 h-full w-full overflow-hidden">
 
   </div>
-  <div class="relative   min-h-screen  sm:flex sm:flex-row  justify-center bg-transparent rounded-3xl shadow-xl">
-    <div class="flex-col flex  self-center  z-10">
-      <div class="self-start hidden lg:flex flex-col text-gray-400 px-8">
-
-        <h1 class="my-3 font-semibold text-4xl">Welcome!</h1>
-        <p class="pr-3 text-sm opacity-[80]">Lorem ipsum is placeholder text commonly used in the graphic, print,
-          and publishing industries for previewing layouts and visual mockups</p>
-      </div>
-    </div>
+  <div class="relative  min-h-screen  sm:flex sm:flex-row  justify-center bg-transparent rounded-3xl shadow-xl p-4">
+    <!-- REGISTER FORM -->
     <div class="flex justify-center self-center z-10">
-      <div class="p-12 bg-white mx-auto rounded-3xl w-96 drop-shadow-xl ">
+      <div class="p-12 bg-white mx-auto rounded-3xl w-[36rem] drop-shadow-2xl ">
         <div class="mb-7">
-          <h3 class="font-semibold text-2xl text-gray-800 mb-2">Sign In </h3>
-          <p class="text-gray-400">Don't have an account? <a @click.prevent="$router.push('/register')"
-              class="text-sm text-red-400 hover:text-red-300 cursor-pointer">Sign
-              Up</a></p>
+          <h3 class="font-semibold text-2xl text-gray-800 mb-2">Sign Up</h3>
+          <h3 class=" text-[1rem] text-gray-800 mb-2">Create a new CreatiVitae account.</h3>
         </div>
         <div class="space-y-6">
-          <form @submit.prevent="$event => doLogin(formData)" class="space-y-6">
+          <form @submit.prevent="doRegister(formData)" class="space-y-6">
+
+            <!-- USERNAME -->
+            <div class="">
+              <input v-model="formData.username"
+                class=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-red-400"
+                type="text" placeholder="Username">
+            </div>
+
+            <!-- EMAIL -->
             <div class="">
               <input v-model="formData.email"
                 class=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-red-400"
-                type="" placeholder="Email">
+                type="email" placeholder="Email">
             </div>
 
+            <!-- PASSWORD -->
             <div class="relative" x-data="{ show: true }">
               <input v-model="formData.password" placeholder="Password" :type="!showPassword ? 'password' : 'text'"
                 autocomplete="off"
-                class="text-sm px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-red-400">
+                class="text-sm text-gray-200 px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-red-400">
+              <div class="flex items-center absolute inset-y-0 right-0 mr-3  text-sm leading-5">
+              </div>
               <div @click="toggle" v-if="!showPassword"
                 class="show-pw flex justify-start items-center gap-2 mt-2 cursor-pointer">
                 <v-icon name="hi-eye" scale="1.2" fill="#e33427" />
-                <p class="text-red-400 text-[0.9rem]">Show password</p>
+                <p class=" text-theme-red text-[0.9rem]">Show password</p>
               </div>
               <div @click="toggle" v-if="showPassword"
                 class="show-pw flex justify-start items-center gap-2 mt-2 cursor-pointer">
                 <v-icon name="hi-solid-eye-off" scale="1.2" fill="#e33427" />
-                <p class="text-red-400 text-[0.9rem]">Hide password</p>
-              </div>
-              <div class="flex items-center absolute inset-y-0 right-0 mr-3  text-sm leading-5">
-
+                <p class="text-theme-red text-[0.9rem]">Hide password</p>
               </div>
             </div>
 
-            <div class="flex items-center justify-between">
-              <div class="text-sm ml-auto">
-                <a href="#" class="text-red-400 hover:text-red-300">
-                  Forgot your password?
-                </a>
-              </div>
+            <!-- ADDRESS -->
+            <div class="">
+              <input v-model="formData.address"
+                class=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-red-400"
+                type="text" placeholder="Address">
             </div>
+
+            <!-- PHONE NUMBER -->
+            <div class="">
+              <input v-model="formData.phoneNumber"
+                class=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-red-400"
+                type="text" placeholder="Phone Number">
+            </div>
+
             <div>
               <button type="submit"
-                class="w-full flex justify-center bg-red-400  hover:bg-red-300 text-gray-100 p-3 rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-[50]">
-                Sign in
+                class="w-full flex justify-center bg-theme-red  hover:bg-red-400 text-gray-100 p-3 rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-[50]">
+                Sign Up
               </button>
             </div>
           </form>
@@ -127,13 +136,23 @@ export default {
                 </g>
               </svg>
               <!-- <svg class="w-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" fill-rule="evenodd" d="M9.945 22v-8.834H7V9.485h2.945V6.54c0-3.043 1.926-4.54 4.64-4.54 1.3 0 2.418.097 2.744.14v3.18h-1.883c-1.476 0-1.82.703-1.82 1.732v2.433h3.68l-.736 3.68h-2.944L13.685 22"></path></svg> -->
-              <span>LinkedIn</span>
+              <span>Facebook</span>
             </button>
 
           </div>
         </div>
         <div class="mt-7 text-center text-gray-300 text-xs">
         </div>
+      </div>
+    </div>
+
+    <!-- WELCOMING TEXT -->
+    <div class="flex-col flex  self-center  z-10">
+      <div class="self-start hidden lg:flex flex-col text-gray-400 px-8">
+
+        <h1 class="my-3 font-semibold text-4xl">Welcome!</h1>
+        <p class="pr-3 text-sm opacity-[80]">Lorem ipsum is placeholder text commonly used in the graphic, print,
+          and publishing industries for previewing layouts and visual mockups</p>
       </div>
     </div>
   </div>
