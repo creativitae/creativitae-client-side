@@ -2,8 +2,12 @@
 <script>
 import { mapActions, mapState, mapWritableState } from 'pinia';
 import { useMainStore } from '../stores/main';
+import LoginLinkedin from '../components/LoginLinkedin.vue';
 
 export default {
+  components: {
+    LoginLinkedin,
+  },
   data() {
     return {
       formData: {
@@ -35,6 +39,7 @@ export default {
       <div class="self-start hidden lg:flex flex-col text-gray-400 px-8">
 
         <h1 class="my-3 font-semibold text-4xl">Welcome!</h1>
+
         <p class="pr-3 text-sm opacity-[80]">Lorem ipsum is placeholder text commonly used in the graphic, print,
           and publishing industries for previewing layouts and visual mockups</p>
       </div>
@@ -79,6 +84,7 @@ export default {
                 <a href="#" class="text-red-400 hover:text-red-300">
                   Forgot your password?
                 </a>
+                <LoginLinkedin />
               </div>
             </div>
             <div>
