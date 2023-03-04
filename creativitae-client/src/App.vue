@@ -12,7 +12,7 @@ export default {
 </script>
 
 <template>
-  <Navbar />
+  <Navbar v-if="$route.path !== '/register' && $route.path !== '/login'" />
   <router-view />
   <Footer />
 </template>
