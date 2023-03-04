@@ -1,4 +1,4 @@
-<script setup>
+<script>
 import TheWelcome from '../components/TheWelcome.vue'
 import LogoLinkedin from '../components/LoginLinkedin.vue'
 </script>
