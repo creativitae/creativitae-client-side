@@ -1,14 +1,15 @@
 <script>
 import { mapActions, mapState } from 'pinia'
-import { useAppStore } from '../stores/counter'
+import { useMainStore } from '../stores/main'
 
 export default {
     computed: {
-        ...mapState(useAppStore, ['payment'])
+        ...mapState(useMainStore, ['payment'])
     },
     methods: {
-        ...mapActions(useAppStore, ['xenditPayment']),
+        ...mapActions(useMainStore, ['xenditPayment']),
         handlePayment() {
+            console.log('masuk sini bro');
             this.xenditPayment()
         },
     }
@@ -67,7 +68,8 @@ export default {
                             <span>Get Premium
                             </span>
                         </a>
-                        <a v-else class="inline-flex justify-center rounded-lg text-sm font-semibold py-2 px-3 bg-blue-500 text-white hover:bg-blue-700 mt-6 w-full"
+                        <a v-else
+                            class="inline-flex justify-center rounded-lg text-sm font-semibold py-2 px-3 bg-blue-500 text-white hover:bg-blue-700 mt-6 w-full"
                             :href="payment?.data?.invoice_url">
                             <span>
                                 Got to payment ->
