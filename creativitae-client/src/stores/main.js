@@ -18,8 +18,15 @@ export const useMainStore = defineStore('main', {
   actions: {
     async doRegister(formData) {
       try {
-        console.log(formData)
-      } catch (err) {}
+        let { data } = await axios({
+          method: 'post',
+          url: `${BASE_URL}/users/register`,
+          data: formData
+        })
+        this.router.push('/login')
+      } catch (err) {
+        console.log(err)
+      }
     },
 
     async doLogin(formData) {

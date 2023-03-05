@@ -25,23 +25,22 @@ export default {
     toggle() {
       this.showPassword = this.showPassword ? false : true;
     },
-
-
   }
 }
 </script>
 <template>
-  <div class="bg-red-400 bottom-0 leading-5 h-full w-full overflow-hidden">
+  <div class="bg-theme-red bottom-0 leading-5 h-full w-full overflow-hidden">
 
   </div>
   <div class="relative   min-h-screen  sm:flex sm:flex-row  justify-center bg-transparent rounded-3xl shadow-xl">
     <div class="flex-col flex  self-center  z-10">
-      <div class="self-start hidden lg:flex flex-col text-gray-400 px-8">
+      <div class="self-center hidden lg:flex flex-col text-gray-400 px-8">
 
-        <h1 class="my-3 font-semibold text-4xl">Welcome!</h1>
+        <h1 class="my-3 font-semibold text-4xl text-theme-red">Welcome!</h1>
 
         <p class="pr-3 text-sm opacity-[80]">Lorem ipsum is placeholder text commonly used in the graphic, print,
           and publishing industries for previewing layouts and visual mockups</p>
+        <img src="/images/placeholder-pana.png" class="w-[700px] h-full object-cover">
       </div>
     </div>
     <div class="flex justify-center self-center z-10">
@@ -49,30 +48,30 @@ export default {
         <div class="mb-7">
           <h3 class="font-semibold text-2xl text-gray-800 mb-2">Sign In </h3>
           <p class="text-gray-400">Don't have an account? <a @click.prevent="$router.push('/register')"
-              class="text-sm text-red-400 hover:text-red-300 cursor-pointer">Sign
+              class="text-sm text-theme-red hover:text-red-400 cursor-pointer">Sign
               Up</a></p>
         </div>
         <div class="space-y-6">
           <form @submit.prevent="$event => doLogin(formData)" class="space-y-6">
             <div class="">
               <input v-model="formData.email"
-                class=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-red-400"
+                class=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-theme-red"
                 type="" placeholder="Email">
             </div>
 
             <div class="relative" x-data="{ show: true }">
               <input v-model="formData.password" placeholder="Password" :type="!showPassword ? 'password' : 'text'"
                 autocomplete="off"
-                class="text-sm px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-red-400">
+                class="text-sm px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-theme-red">
               <div @click="toggle" v-if="!showPassword"
                 class="show-pw flex justify-start items-center gap-2 mt-2 cursor-pointer">
                 <v-icon name="hi-eye" scale="1.2" fill="#e33427" />
-                <p class="text-red-400 text-[0.9rem]">Show password</p>
+                <p class="text-theme-red text-[0.9rem]">Show password</p>
               </div>
               <div @click="toggle" v-if="showPassword"
                 class="show-pw flex justify-start items-center gap-2 mt-2 cursor-pointer">
                 <v-icon name="hi-solid-eye-off" scale="1.2" fill="#e33427" />
-                <p class="text-red-400 text-[0.9rem]">Hide password</p>
+                <p class="text-theme-red text-[0.9rem]">Hide password</p>
               </div>
               <div class="flex items-center absolute inset-y-0 right-0 mr-3  text-sm leading-5">
 
@@ -81,7 +80,7 @@ export default {
 
             <div class="flex items-center justify-between">
               <div class="text-sm ml-auto">
-                <a href="#" class="text-red-400 hover:text-red-300">
+                <a href="#" class="text-theme-red hover:text-red-400">
                   Forgot your password?
                 </a>
                 <LoginLinkedin />
@@ -89,7 +88,7 @@ export default {
             </div>
             <div>
               <button type="submit"
-                class="w-full flex justify-center bg-red-400  hover:bg-red-300 text-gray-100 p-3 rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-[50]">
+                class="w-full flex justify-center bg-theme-red  hover:bg-red-400 text-gray-100 p-3 rounded-lg tracking-wide font-semibold  cursor-pointer transition ease-in duration-[50]">
                 Sign in
               </button>
             </div>
@@ -104,7 +103,7 @@ export default {
           <div class="flex justify-center gap-5 w-full ">
 
             <button type="submit"
-              class="w-full flex items-center justify-center mb-6 md:mb-0 border border-gray-300 hover:border-red-400 hover:bg-red-400 hover:text-white text-sm text-gray-500 p-3  rounded-lg tracking-wide font-medium  cursor-pointer transition ease-in duration-[50]">
+              class="w-full flex items-center justify-center mb-6 md:mb-0 border border-gray-300 hover:border-theme-red hover:bg-theme-red hover:text-white text-sm text-gray-500 p-3  rounded-lg tracking-wide font-medium  cursor-pointer transition ease-in duration-[50]">
               <svg class="w-4 mr-2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path fill="#EA4335"
                   d="M5.266 9.765A7.077 7.077 0 0 1 12 4.909c1.69 0 3.218.6 4.418 1.582L19.91 3C17.782 1.145 15.055 0 12 0 7.27 0 3.198 2.698 1.24 6.65l4.026 3.115Z" />
@@ -120,7 +119,7 @@ export default {
             </button>
 
             <button type="submit"
-              class="w-full flex items-center justify-center mb-6 md:mb-0 border border-gray-300 hover:border-red-400 hover:bg-red-400 hover:text-white text-sm text-gray-500 p-3  rounded-lg tracking-wide font-medium  cursor-pointer transition ease-in duration-[50]">
+              class="w-full flex items-center justify-center mb-6 md:mb-0 border border-gray-300 hover:border-theme-red hover:bg-theme-red hover:text-white text-sm text-gray-500 p-3  rounded-lg tracking-wide font-medium  cursor-pointer transition ease-in duration-[50]">
               <svg class="w-4 mr-2" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve"
                 xmlns="http://www.w3.org/2000/svg">
                 <g id="Layer_1" />

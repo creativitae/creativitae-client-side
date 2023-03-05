@@ -29,15 +29,15 @@ export default {
 }
 </script>
 <template>
-  <div class="bg-red-400 bottom-0 leading-5 h-full w-full overflow-hidden">
+  <div class="bg-theme-red bottom-0 leading-5 h-full w-full overflow-hidden">
 
   </div>
   <div class="relative  min-h-screen  sm:flex sm:flex-row  justify-center bg-transparent rounded-3xl shadow-xl p-4">
     <!-- REGISTER FORM -->
     <div class="flex justify-center self-center z-10">
-      <div class="p-12 bg-white mx-auto rounded-3xl w-[36rem] drop-shadow-2xl ">
+      <div class="px-12 py-6 bg-white mx-auto rounded-3xl w-[36rem] drop-shadow-2xl ">
         <div class="mb-7">
-          <h3 class="font-semibold text-2xl text-gray-800 mb-2">Sign Up</h3>
+          <h3 class="font-semibold text-2xl mb-2 text-theme-red ">Sign Up</h3>
           <h3 class=" text-[1rem] text-gray-800 mb-2">Create a new CreatiVitae account.</h3>
         </div>
         <div class="space-y-6">
@@ -46,14 +46,14 @@ export default {
             <!-- USERNAME -->
             <div class="">
               <input v-model="formData.username"
-                class=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-red-400"
+                class=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-theme-red"
                 type="text" placeholder="Username">
             </div>
 
             <!-- EMAIL -->
             <div class="">
               <input v-model="formData.email"
-                class=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-red-400"
+                class=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-theme-red"
                 type="email" placeholder="Email">
             </div>
 
@@ -61,7 +61,7 @@ export default {
             <div class="relative" x-data="{ show: true }">
               <input v-model="formData.password" placeholder="Password" :type="!showPassword ? 'password' : 'text'"
                 autocomplete="off"
-                class="text-sm text-gray-200 px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-red-400">
+                class="text-sm text-gray-200 px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-theme-red">
               <div class="flex items-center absolute inset-y-0 right-0 mr-3  text-sm leading-5">
               </div>
               <div @click="toggle" v-if="!showPassword"
@@ -79,14 +79,14 @@ export default {
             <!-- ADDRESS -->
             <div class="">
               <input v-model="formData.address"
-                class=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-red-400"
+                class=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-theme-red"
                 type="text" placeholder="Address">
             </div>
 
             <!-- PHONE NUMBER -->
             <div class="">
               <input v-model="formData.phoneNumber"
-                class=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-red-400"
+                class=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-theme-red"
                 type="text" placeholder="Phone Number">
             </div>
 
@@ -107,7 +107,7 @@ export default {
           <div class="flex justify-center gap-5 w-full ">
 
             <button type="submit"
-              class="w-full flex items-center justify-center mb-6 md:mb-0 border border-gray-300 hover:border-red-400 hover:bg-red-400 hover:text-white text-sm text-gray-500 p-3  rounded-lg tracking-wide font-medium  cursor-pointer transition ease-in duration-[50]">
+              class="w-full flex items-center justify-center mb-6 md:mb-0 border border-gray-300 hover:border-theme-red hover:bg-theme-red hover:text-white text-sm text-gray-500 p-3  rounded-lg tracking-wide font-medium  cursor-pointer transition ease-in duration-[50]">
               <svg class="w-4 mr-2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path fill="#EA4335"
                   d="M5.266 9.765A7.077 7.077 0 0 1 12 4.909c1.69 0 3.218.6 4.418 1.582L19.91 3C17.782 1.145 15.055 0 12 0 7.27 0 3.198 2.698 1.24 6.65l4.026 3.115Z" />
@@ -123,7 +123,7 @@ export default {
             </button>
 
             <button type="submit"
-              class="w-full flex items-center justify-center mb-6 md:mb-0 border border-gray-300 hover:border-red-400 hover:bg-red-400 hover:text-white text-sm text-gray-500 p-3  rounded-lg tracking-wide font-medium  cursor-pointer transition ease-in duration-[50]">
+              class="w-full flex items-center justify-center mb-6 md:mb-0 border border-gray-300 hover:border-theme-red hover:bg-theme-red hover:text-white text-sm text-gray-500 p-3  rounded-lg tracking-wide font-medium  cursor-pointer transition ease-in duration-[50]">
               <svg class="w-4 mr-2" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve"
                 xmlns="http://www.w3.org/2000/svg">
                 <g id="Layer_1" />
@@ -136,7 +136,7 @@ export default {
                 </g>
               </svg>
               <!-- <svg class="w-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" fill-rule="evenodd" d="M9.945 22v-8.834H7V9.485h2.945V6.54c0-3.043 1.926-4.54 4.64-4.54 1.3 0 2.418.097 2.744.14v3.18h-1.883c-1.476 0-1.82.703-1.82 1.732v2.433h3.68l-.736 3.68h-2.944L13.685 22"></path></svg> -->
-              <span>Facebook</span>
+              <span class="">LinkedIn</span>
             </button>
 
           </div>
@@ -148,11 +148,13 @@ export default {
 
     <!-- WELCOMING TEXT -->
     <div class="flex-col flex  self-center  z-10">
-      <div class="self-start hidden lg:flex flex-col text-gray-400 px-8">
+      <div class="self-center hidden lg:flex flex-col text-gray-400 px-8 justify-center items-center">
 
-        <h1 class="my-3 font-semibold text-4xl">Welcome!</h1>
-        <p class="pr-3 text-sm opacity-[80]">Lorem ipsum is placeholder text commonly used in the graphic, print,
+        <h1 class="my-3 font-semibold text-4xl text-left text-theme-red">Welcome!</h1>
+        <p class="pr-3 text-sm opacity-[80] text-center">Lorem ipsum is placeholder text commonly used in the graphic,
+          print,
           and publishing industries for previewing layouts and visual mockups</p>
+        <img src="/images/placeholder-reg.png" class="w-[700px] h-full object-cover">
       </div>
     </div>
   </div>

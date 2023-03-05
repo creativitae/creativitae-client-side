@@ -8,19 +8,20 @@
     class="flex justify-around py-4 bg-white/80 backdrop-blur-md shadow-md w-full h-[72px] fixed top-0 left-0 right-0 z-[10000]">
 
     <!-- Logo Container -->
-    <div class="flex items-center">
-      <!-- Logo -->
-    <a class="cursor-pointer">
-      <!-- <h3 class="text-2xl font-medium text-theme-red">
-                                LOGO.JPG
-                              </h3> -->
+  <div class="flex items-center">
+    <!-- Logo -->
+      <a class="cursor-pointer">
+        <!-- <h3 class="text-2xl font-medium text-theme-red">
+                                      LOGO.JPG
+                                    </h3> -->
         <img src="/images/creativitae-logo-full-curved.png" class="w-full h-[50px] drop-shadow-md" />
       </a>
     </div>
 
     <!-- Links Section -->
     <div class="items-center hidden space-x-8 lg:flex">
-      <a class="flex text-gray-600 hover:text-theme-red cursor-pointer transition-colors duration-300">
+      <a @click.prevent="$router.push('/')"
+        class="flex text-gray-600 hover:text-theme-red cursor-pointer transition-colors duration-300">
         Home
       </a>
 
@@ -28,7 +29,8 @@
         About
       </a>
 
-      <a class="flex text-gray-600 hover:text-theme-red cursor-pointer transition-colors duration-300">
+      <a @click.prevent="$router.push('/getPremium')"
+        class="flex text-gray-600 hover:text-theme-red cursor-pointer transition-colors duration-300">
         Premium Membership
       </a>
 
@@ -39,7 +41,6 @@
 
     <!-- Icon Menu Section -->
     <div class="flex items-center space-x-5">
-      <a href="" class="block text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" @click.prevent="$router.push('/getPremium')">Get Premium</a>
       <!-- Register -->
       <a class="flex text-gray-600 hover:text-theme-red cursor-pointer transition-colors duration-300">
 

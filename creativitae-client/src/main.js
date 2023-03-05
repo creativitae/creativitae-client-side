@@ -8,7 +8,12 @@ import {
   FaFacebook,
   FaTwitter,
   FaInstagram,
-  FaLinkedin
+  FaLinkedin,
+  FaEdit,
+  FaRegularTrashAlt,
+  FaArrowAltCircleLeft,
+  FaArrowAltCircleRight,
+  HiLockClosed
 } from 'oh-vue-icons/icons'
 
 import App from './App.vue'
@@ -19,7 +24,20 @@ import './assets/main.css'
 const app = createApp(App)
 const pinia = createPinia()
 
-addIcons(HiEye, HiSolidEyeOff, FaFacebook, FaGithub, FaInstagram, FaTwitter, FaLinkedin)
+addIcons(
+  HiEye,
+  HiSolidEyeOff,
+  FaFacebook,
+  FaGithub,
+  FaInstagram,
+  FaTwitter,
+  FaLinkedin,
+  FaRegularTrashAlt,
+  FaEdit,
+  FaArrowAltCircleLeft,
+  FaArrowAltCircleRight,
+  HiLockClosed
+)
 app.component('v-icon', OhVueIcon)
 app.use(pinia)
 app.use(router)

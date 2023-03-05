@@ -7,6 +7,7 @@ import RegisterPage from '../pages/RegisterPage.vue'
 import GetPremium from '../pages/GetPremiumPage.vue'
 import Callbacks from '../components/Callback.vue'
 import LoginLinkedin from '../components/LoginLinkedIn.vue'
+import Resume1 from '../templates/Resume1.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -42,6 +43,10 @@ const router = createRouter({
     {
       path: '/login-linkedin',
       component: LoginLinkedin
+    },
+    {
+      path: '/create-cv',
+      component: Resume1
     }
   ]
 })
