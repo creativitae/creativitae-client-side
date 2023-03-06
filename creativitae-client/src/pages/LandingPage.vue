@@ -1,4 +1,19 @@
-<script></script>
+<script>
+import { mapActions, mapState, mapWritableState } from 'pinia';
+import { useMainStore } from '../stores/main';
+
+export default {
+  computed: {
+    ...mapState(useMainStore, ['templates'])
+  },
+  methods: {
+    ...mapActions(useMainStore, ['fetchTemplates'])
+  },
+  created() {
+    this.fetchTemplates()
+  }
+}
+</script>
 <template>
   <div class="mt-[72px] p-8">
 
@@ -26,8 +41,9 @@
       </div>
       <div class="template-preview flex justify-center items-center w-full h-fit flex-wrap gap-x-[10rem] gap-y-[4rem]">
         <!-- CV TEMPLATES -->
-        <div v-for="i in 10" class="cv-card bg-slate-300 rounded-md w-[400px] h-[564px] flex justify-center items-center">
-          <p class="text-[2rem] text-slate-500/50">TEMPLATE</p>
+        <div v-for="template in templates" :key="template.id"
+          class="cv-card bg-slate-300 rounded-md w-[400px] h-[564px] flex justify-center items-center">
+          <p class="text-[2rem] text-slate-500/50">{{ template.name }}</p>
         </div>
       </div>
     </div>

@@ -26,7 +26,7 @@ export default {
 <template>
   <div class="mt-[72px] p-8">
     <div
-      class="dashboard-content h-fit flex flex-col justify-start items-center bg-slate-200/80 shadow-inner w-full rounded-2xl">
+      class="dashboard-content h-fit min-h-[70vh] flex flex-col justify-start items-center bg-slate-200/80 shadow-inner w-full rounded-2xl">
       <div class="create-button w-full px-8 py-8">
         <button
           class="px-4 py-2 bg-theme-red w-full text-white font-bold rounded-xl drop-shadow-md hover:bg-red-400 transition-all">Create
@@ -34,7 +34,7 @@ export default {
         </button>
       </div>
       <div class="cv-list w-full h-full px-8 py-8 flex justify-center items-start gap-x-[8rem] gap-y-[2.5rem] flex-wrap">
-        <div v-for="i in 5"
+        <div v-for="i in 0"
           class="cv-card bg-slate-300 rounded-md w-[300px] h-[423px] flex justify-center items-center relative">
           <div class="button-container absolute bottom-3 left-0 w-full flex justify-center items-center gap-[1.5rem]">
             <button

@@ -1,7 +1,7 @@
 <template>
   <Carousel ref="templateCarousel" :items-to-show="2.2" :wrap-around="true" class="w-[100%]">
-    <Slide v-for="i in 5" :key="i" class="">
-      <TemplateCard :i="i" :userPremium="userPremium" :templatePremium="templatePremium" />
+    <Slide v-for="template in templates" :key="template.id" class="">
+      <TemplateCard :template="template" :userPremium="userPremium" :templatePremium="templatePremium" />
     </Slide>
 
 
@@ -21,9 +21,12 @@
 
 <script>
 import { defineComponent, ref } from 'vue'
+import { mapActions, mapState, mapWritableState } from 'pinia';
+import { useMainStore } from '../stores/main';
 import { Carousel, Navigation, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 import TemplateCard from './TemplateCard.vue'
+
 
 
 export default defineComponent({
@@ -43,6 +46,8 @@ export default defineComponent({
     }
   },
   methods: {
+
+    ...mapActions(useMainStore, ['fetchTemplates']),
     next() {
       this.$refs.templateCarousel.next()
     },
@@ -50,6 +55,14 @@ export default defineComponent({
       this.$refs.templateCarousel.prev()
     },
 
+
+
+  },
+  computed: {
+    ...mapState(useMainStore, ['templates'])
+  },
+  created() {
+    this.fetchTemplates()
   }
 })
 </script>

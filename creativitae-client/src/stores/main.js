@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import axios from 'axios'
 
 const BASE_URL = 'http://localhost:3000'
+const BASE_NGROK = `https://f11f-139-228-111-126.ap.ngrok.io`
 
 export const useMainStore = defineStore('main', {
   state: () => {
@@ -9,7 +10,8 @@ export const useMainStore = defineStore('main', {
       payment: {},
       loggedIn: false,
       LinkedinUser: false,
-      emailLinkedin: {}
+      emailLinkedin: {},
+      templates: []
     }
   },
 
@@ -147,6 +149,23 @@ export const useMainStore = defineStore('main', {
         // this.statusTemplate()
       } catch (error) {
         console.log(error.response.data)
+      }
+    },
+
+    async fetchTemplates() {
+      try {
+        let { data } = await axios({
+          method: 'GET',
+          url: `${BASE_NGROK}/templates`,
+          // TODO - HAPUS PAS KE PRODUCTION
+          headers: {
+            'ngrok-skip-browser-warning': 'any'
+          }
+        })
+
+        this.templates = data
+      } catch (err) {
+        console.log(err)
       }
     }
   }
