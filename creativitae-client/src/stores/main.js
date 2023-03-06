@@ -1,5 +1,17 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
+import Swal from 'sweetalert2'
+const Toast = Swal.mixin({
+  toast: true,
+  position: 'top-right',
+  iconColor: 'white',
+  customClass: {
+    popup: 'colored-toast'
+  },
+  showConfirmButton: false,
+  timer: 1500,
+  timerProgressBar: true
+})
 
 const BASE_URL = 'http://localhost:3000'
 const BASE_NGROK = `https://f11f-139-228-111-126.ap.ngrok.io`
@@ -28,7 +40,7 @@ export const useMainStore = defineStore('main', {
       try {
         let { data } = await axios({
           method: 'post',
-          url: `${BASE_URL}/users/register`,
+          url: `${BASE_URL}/public/register`,
           data: formData
         })
         this.router.push('/login')
@@ -41,14 +53,28 @@ export const useMainStore = defineStore('main', {
       try {
         let { data } = await axios({
           method: 'post',
-          url: `${BASE_URL}/users/login`,
+          url: `${BASE_URL}/public/login`,
           data: formData
         })
         localStorage.setItem('access_token', data.access_token)
         this.loggedIn = true
         this.router.push('/')
+        await Toast.fire({
+          icon: 'success',
+          title: 'welcome back',
+          text: 'Success Login'
+        })
       } catch (err) {
         console.log(err)
+      }
+    },
+
+    async doLogout() {
+      try {
+        localStorage.removeItem("access_token")
+        this.loggedIn = false
+      } catch (error) {
+        console.log(error);
       }
     },
 
