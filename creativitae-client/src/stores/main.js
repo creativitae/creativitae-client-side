@@ -11,7 +11,13 @@ export const useMainStore = defineStore('main', {
       loggedIn: false,
       LinkedinUser: false,
       emailLinkedin: {},
-      templates: []
+      templates: [],
+      preview: null,
+      image: null,
+      preview_list: [],
+      image_list: [],
+      fileName: {},
+      outputServer: {}
     }
   },
 
@@ -166,6 +172,66 @@ export const useMainStore = defineStore('main', {
         this.templates = data
       } catch (err) {
         console.log(err)
+      }
+    },
+
+    async singleImage() {
+      try {
+        let input = event.target;
+        console.log(input.files, "<<<<<< single image");
+        if (input.files) {
+          let reader = new FileReader();
+          reader.onload = (e) => {
+            this.preview = e.target.result;
+          }
+          this.image=input.files[0];
+          reader.readAsDataURL(input.files[0]);
+        }
+        this.fileName = input.files
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async multipleImage() {
+      'masuk'
+      try {
+        // console.log('masuk');
+        let input = event.target;
+        console.log(input.files, "<<<<<tanda");
+        let count = input.files.length;
+        let index = 0;
+        if (input.files) {
+          while(count --) {
+            let reader = new FileReader();
+            reader.onload = (e) => {
+              this.preview_list.push(e.target.result);
+            }
+            this.image_list.push(input.files[index]);
+            reader.readAsDataURL(input.files[index]);
+            index ++;
+          }
+        }
+        console.log(this.preview_list, this.image_list, "<<<<<<<<masukk");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async getServer(img){
+      try {
+        console.log(img[0], 'masuk 2');
+        let bodyFormData = new FormData()
+        bodyFormData.append('image', img[0])
+        let data = await axios({
+          method: 'POST',
+          url: 'http://localhost:3000/templates/upload-images',
+          data: bodyFormData,
+          headers: {"Content-Type": "multipart/form-data"}
+        })
+        console.log(data, "<<<< ini data");
+      } catch (error) {
+        console.log(error);
       }
     }
   }
