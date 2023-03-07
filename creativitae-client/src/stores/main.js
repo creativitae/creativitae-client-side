@@ -63,6 +63,7 @@ export const useMainStore = defineStore('main', {
 
     async doLogin(formData) {
       try {
+        console.log(formData)
         let { data } = await axios({
           method: 'post',
           url: `${BASE_URL}/public/login`,
@@ -91,10 +92,7 @@ export const useMainStore = defineStore('main', {
 
     async doLogout() {
       try {
-        localStorage.removeItem('access_token')
-        localStorage.removeItem('isPremium')
-        localStorage.removeItem('email')
-        localStorage.removeItem('username')
+        localStorage.clear()
         this.loggedIn = false
         this.router.push('/')
         await Toast.fire({
@@ -293,6 +291,26 @@ export const useMainStore = defineStore('main', {
           headers: { 'Content-Type': 'multipart/form-data' }
         })
         this.uploadedProfilePicture = data.url
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
+
+    async uploadResult(img) {
+      try {
+        let bodyFormData = new FormData()
+        bodyFormData.append('image', img)
+        let data = await axios({
+          method: 'POST',
+          url: 'http://localhost:3000/templates/upload-images',
+          data: bodyFormData,
+          headers: {
+            access_token: localStorage.getItem('access_token'),
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+        console.log('keluaran upload: ', data.url)
       } catch (error) {
         console.log(error)
       }
