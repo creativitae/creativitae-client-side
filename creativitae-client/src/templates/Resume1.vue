@@ -8,6 +8,7 @@ export default {
         title: 'Web Developer',
         address: 'Pondok Indah, Jakarta',
         phoneNumber: '08123456789',
+        profilePhoto: '/templates/resume1/resume1-2.svg',
         socialMedia: '',
         workExperiences: {
           we_1: {
@@ -53,7 +54,6 @@ export default {
             certificate: 'http://www.coursera.com'
           }
         ],
-
         skills: this.getSkills,
         languages: this.getLanguages
       },
@@ -102,8 +102,17 @@ export default {
     getYear() {
       this.formData.workExperiences.we_1.year = `${this.formData.workExperiences.we_1.startYear} - ${this.formData.workExperiences.we_1.untilYear}`
     },
-    getPosition() {
-      return this.name_title
+  },
+  created() {
+    this.getSkills
+    this.getLanguages
+  },
+  watch: {
+    skill: function () {
+      this.getSkills
+    },
+    language: function () {
+      this.getLanguages
     },
   },
   mounted() {
@@ -161,7 +170,7 @@ export default {
       class="dashboard-content h-fit flex justify-between items-start bg-slate-200/80 shadow-inner rounded-2xl overflow-hidden p-8 bg-green-200">
       <div class="sticky top-0 w-fit">
         <!-- TEMPLATE GOES HERE -->
-        <img src="/templates/resume1/resume1-2.svg" class="left-8 w-[600px] h-fit sticky top-0" />
+        <img :src="`${formData.profilePhoto}`" class="left-8 w-[600px] h-fit sticky top-0" />
 
         <!-- Output here -->
         <!-- NAME AND TITLE -->
@@ -169,6 +178,11 @@ export default {
           :style="`top: ${name_title.posY}px; left: ${name_title.posX}px`" data-x="0" data-y="0">
           <p class="font-bold text-[1.5rem] leading-[1.4rem]">{{ formData.fullName }}</p>
           <p class="text-[1.2rem] font-thin">{{ formData.title }}</p>
+        </div>
+
+        <!-- IMAGES -->
+        <div class="photo bg-green-200 w-[122px] h-[122px] rounded-full absolute top-[40px] left-[44px] overflow-hidden">
+          <img src="https://source.unsplash.com/y9L5-wmifaY" class="object-cover" />
         </div>
 
         <!-- ABOUT ME -->
@@ -201,14 +215,30 @@ export default {
           SKILLS
         </div>
         <div
-          class="absolute top-[555px] left-[30px] font-thin text-white text-[0.6rem] w-[30%] h-fit text-justify flex gap-y-2 gap-x-4 bg-green-400 flex-wrap">
-          <p v-for="i in 10" class="font-thin text-white text-[0.6rem] w-[45%] leading-3 align-middle"><span
-              class="text-[1.5rem] font-bold">·</span>ReactJS</p>
+          class="absolute top-[555px] left-[30px] font-thin text-white text-[0.6rem] w-[30%] h-fit text-justify flex gap-y-2 gap-x-4 flex-wrap">
+          <p v-for="i in formData.skills"
+            class="font-thin text-white text-[0.6rem] w-[45%] leading-3 align-middle relative pl-[10px]">
+            <span class="text-[1.5rem] font-bold absolute top-[-2px] left-0">·</span>{{ i }}
+          </p>
+        </div>
+
+        <!-- LANGUAGES -->
+        <div
+          class="absolute top-[670px] left-[30px] font-bold text-white text-[0.8rem] w-[30%] h-fit  text-justify flex flex-col gap-y-[1px] border-b-[1px] border-white pb-[0.4rem]">
+          LANGUAGES
+        </div>
+        <div
+          class="absolute top-[705px] left-[30px] font-thin text-white text-[0.6rem] w-[30%] h-fit text-justify flex flex-col gap-y-2 gap-x-4 flex-wrap">
+          <p v-for="i in formData.languages"
+            class="font-thin text-white text-[0.6rem] w-[45%] leading-3 align-middle relative pl-[10px]">
+            <span class="text-[1.5rem] font-bold absolute top-[-2px] left-0">·</span>{{ i }}
+          </p>
         </div>
 
 
 
-        <!-- WORK EXP -->
+
+        <!-- WORK EXP DRAGABLE -->
         <div :style="`top: ${work_exp.posY}px; left: ${work_exp.posX}px`" data-x="0" data-y="0" id="work_exp"
           class="experience-section flex bg-green-200/50 flex-col justify-start absolute z-[11] h-fit w-[352px]">
           <img src="/templates/resume1/experience-part.svg" class="mb-2" />
@@ -232,7 +262,7 @@ export default {
 
         </div>
 
-        <!-- EDUCATION -->
+        <!-- EDUCATION DRAGABLE -->
         <div :style="`top: ${education_section.posY}px; left: ${education_section.posX}px`" data-x="0" data-y="0"
           id="education_section"
           class="experience-section flex bg-blue-200/50 flex-col justify-start absolute z-[11] h-fit w-[352px]">
@@ -255,7 +285,7 @@ export default {
 
         </div>
 
-        <!-- PORTFOLIO -->
+        <!-- PORTFOLIO DRAGABLE -->
         <div :style="`top: ${portfolio_section.posY}px; left: ${portfolio_section.posX}px`" data-x="0" data-y="0"
           id="portfolio_section"
           class="experience-section flex bg-yellow-200/50 flex-col justify-start absolute z-[11] h-fit w-[352px]">
@@ -278,7 +308,7 @@ export default {
 
         </div>
 
-        <!-- CERTIFICATION -->
+        <!-- CERTIFICATION DRAGABLE -->
         <div :style="`top: ${certification_section.posY}px; left: ${certification_section.posX}px`" data-x="0" data-y="0"
           id="certification_section"
           class="experience-section flex bg-yellow-200/50 flex-col justify-start absolute z-[11] h-fit w-[352px]">
