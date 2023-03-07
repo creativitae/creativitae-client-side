@@ -25,7 +25,7 @@ export const useMainStore = defineStore('main', {
       emailLinkedin: {},
       templates: [],
       userPremium: {},
-      isPremium: {},
+      isPremium: localStorage.getItem("isPremium")
       preview: null,
       image: null,
       preview_list: [],
@@ -96,7 +96,7 @@ export const useMainStore = defineStore('main', {
         this.loggedIn = false
         this.router.push('/')
         await Toast.fire({
-          icon: 'success',
+          icon: 'error',
           text: `Good Bye`,
           titleText: 'Success Logout'
         })
@@ -296,6 +296,7 @@ export const useMainStore = defineStore('main', {
       }
     },
 
+
     async uploadResult(img) {
       try {
         let bodyFormData = new FormData()
@@ -313,6 +314,39 @@ export const useMainStore = defineStore('main', {
       } catch (error) {
         console.log(error)
       }
-    }
+    },
+    async googleLogin(response) {
+      try {
+        let { data } = await axios({
+          method: 'post',
+          url: `http://localhost:3000/google-login`,
+          data: {
+            googleToken: response.credential
+          },
+          headers: {
+            "ngrok-skip-browser-warning":"any"
+          }
+        })
+        localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem("username", data.email);
+        localStorage.setItem("isPremium", data.isPremium);
+        this.loggedIn = true
+        this.router.push('/')
+        Toast.fire({
+          title: "Great!",
+          text: `Welcome back, ${data.username}`,
+          icon: "success",
+          confirmButtonText: "Cool!",
+        });
+        localStorage.setItem("username", data.username);
+      } catch (error) {
+        Toast.fire({
+          title: "Error!",
+          html: `${error.response.data.message}`,
+          icon: "error",
+          confirmButtonText: "Try again!",
+        });
+      }
+    },
   }
 })

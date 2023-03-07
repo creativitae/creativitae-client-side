@@ -9,6 +9,7 @@ import Callbacks from '../components/Callback.vue'
 import LoginLinkedin from '../components/LoginLinkedIn.vue'
 import Resume1 from '../templates/Resume1.vue'
 import UploadImg from '../components/UploadImg.vue'
+import AboutPage from '../pages/AboutPage.vue'
 import DetailCVPage from '../pages/DetailCVPage.vue'
 
 const router = createRouter({
@@ -53,6 +54,10 @@ const router = createRouter({
     {
       path: '/uploadImg',
       component: UploadImg
+    },
+    {
+      path: '/about',
+      component: AboutPage
     },
     {
       path: '/detail',
