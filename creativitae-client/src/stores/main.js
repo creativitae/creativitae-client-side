@@ -13,8 +13,8 @@ const Toast = Swal.mixin({
   timerProgressBar: true
 })
 
-// const BASE_URL = 'http://localhost:3000'
-const BASE_URL = `https://5790-139-228-111-126.ap.ngrok.io`
+const BASE_URL = 'http://localhost:3000'
+// const BASE_URL = `https://5790-139-228-111-126.ap.ngrok.io`
 
 export const useMainStore = defineStore('main', {
   state: () => {
@@ -25,7 +25,7 @@ export const useMainStore = defineStore('main', {
       emailLinkedin: {},
       templates: [],
       userPremium: {},
-      isPremium: {},
+      isPremium: localStorage.getItem("isPremium")
       preview: null,
       image: null,
       preview_list: [],
