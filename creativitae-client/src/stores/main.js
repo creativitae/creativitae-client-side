@@ -26,6 +26,12 @@ export const useMainStore = defineStore('main', {
       templates: [],
       userPremium: {},
       isPremium: localStorage.getItem("isPremium")
+      preview: null,
+      image: null,
+      preview_list: [],
+      uploadedProfilePicture: 'https://source.unsplash.com/y9L5-wmifaY',
+      fileName: {},
+      outputServer: {}
     }
   },
 
@@ -66,7 +72,7 @@ export const useMainStore = defineStore('main', {
         localStorage.setItem('isPremium', data.isPremium)
         localStorage.setItem('email', data.email)
         localStorage.setItem('username', data.username)
-        console.log(data);
+        console.log(data)
         this.loggedIn = true
         this.router.push('/')
         await Toast.fire({
@@ -85,19 +91,19 @@ export const useMainStore = defineStore('main', {
 
     async doLogout() {
       try {
-        localStorage.removeItem("access_token")
-        localStorage.removeItem("isPremium")
-        localStorage.removeItem("email")
-        localStorage.removeItem("username")
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('isPremium')
+        localStorage.removeItem('email')
+        localStorage.removeItem('username')
         this.loggedIn = false
         this.router.push('/')
         await Toast.fire({
-          icon: 'success',
+          icon: 'error',
           text: `Good Bye`,
           titleText: 'Success Logout'
         })
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     },
 
@@ -106,7 +112,10 @@ export const useMainStore = defineStore('main', {
         console.log('ini masuk dolinkedinlogin')
         let { data } = await axios({
           method: 'get',
-          url: `${BASE_URL}/users/linkedin-request-auth`
+          url: `${BASE_URL}/users/linkedin-request-auth`,
+          headers: {
+            'ngrok-skip-browser-warning': 'any'
+          }
         })
         window.open(data.url, '_blank')
       } catch (err) {
@@ -204,8 +213,8 @@ export const useMainStore = defineStore('main', {
           }
         })
         this.payment = data
-        localStorage.setItem("isPremium", true)
-        console.log(data);
+        localStorage.setItem('isPremium', true)
+        console.log(data)
       } catch (error) {
         console.log(error.response.data)
       }
@@ -221,7 +230,7 @@ export const useMainStore = defineStore('main', {
             'ngrok-skip-browser-warning': 'any'
           }
         })
-        console.log(data);
+        console.log(data)
 
         this.templates = data
       } catch (err) {
@@ -231,19 +240,19 @@ export const useMainStore = defineStore('main', {
 
     async singleImage() {
       try {
-        let input = event.target;
-        console.log(input.files, "<<<<<< single image");
+        let input = event.target
+        console.log(input.files, '<<<<<< single image')
         if (input.files) {
-          let reader = new FileReader();
+          let reader = new FileReader()
           reader.onload = (e) => {
-            this.preview = e.target.result;
+            this.preview = e.target.result
           }
-          this.image=input.files[0];
-          reader.readAsDataURL(input.files[0]);
+          this.image = input.files[0]
+          reader.readAsDataURL(input.files[0])
         }
         this.fileName = input.files
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     },
 
@@ -251,42 +260,75 @@ export const useMainStore = defineStore('main', {
       'masuk'
       try {
         // console.log('masuk');
-        let input = event.target;
-        console.log(input.files, "<<<<<tanda");
-        let count = input.files.length;
-        let index = 0;
+        let input = event.target
+        console.log(input.files, '<<<<<tanda')
+        let count = input.files.length
+        let index = 0
         if (input.files) {
-          while(count --) {
-            let reader = new FileReader();
+          while (count--) {
+            let reader = new FileReader()
             reader.onload = (e) => {
-              this.preview_list.push(e.target.result);
+              this.preview_list.push(e.target.result)
             }
-            this.image_list.push(input.files[index]);
-            reader.readAsDataURL(input.files[index]);
-            index ++;
+            this.image_list.push(input.files[index])
+            reader.readAsDataURL(input.files[index])
+            index++
           }
         }
-        console.log(this.preview_list, this.image_list, "<<<<<<<<masukk");
+        console.log(this.preview_list, this.image_list, '<<<<<<<<masukk')
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
     },
 
-    async getServer(img){
+    async getServer(img) {
       try {
-        console.log(img[0], 'masuk 2');
+        console.log(img[0], 'masuk 2')
         let bodyFormData = new FormData()
         bodyFormData.append('image', img[0])
         let data = await axios({
           method: 'POST',
           url: 'http://localhost:3000/templates/upload-images',
           data: bodyFormData,
-          headers: {"Content-Type": "multipart/form-data"}
+          headers: { 'Content-Type': 'multipart/form-data' }
         })
-        console.log(data, "<<<< ini data");
+        this.uploadedProfilePicture = data.url
       } catch (error) {
-        console.log(error);
+        console.log(error)
       }
-    }
+    },
+    async googleLogin(response) {
+      try {
+        let { data } = await axios({
+          method: 'post',
+          url: `http://localhost:3000/google-login`,
+          data: {
+            googleToken: response.credential
+          },
+          headers: {
+            "ngrok-skip-browser-warning":"any"
+          }
+        })
+        localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem("username", data.email);
+        localStorage.setItem("isPremium", data.isPremium);
+        this.loggedIn = true
+        this.router.push('/')
+        Toast.fire({
+          title: "Great!",
+          text: `Welcome back, ${data.username}`,
+          icon: "success",
+          confirmButtonText: "Cool!",
+        });
+        localStorage.setItem("username", data.username);
+      } catch (error) {
+        Toast.fire({
+          title: "Error!",
+          html: `${error.response.data.message}`,
+          icon: "error",
+          confirmButtonText: "Try again!",
+        });
+      }
+    },
   }
 })

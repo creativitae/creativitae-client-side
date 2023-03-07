@@ -10,6 +10,7 @@ import LoginLinkedin from '../components/LoginLinkedIn.vue'
 import Resume1 from '../templates/Resume1.vue'
 import UploadImg from '../components/UploadImg.vue'
 import AboutPage from '../pages/AboutPage.vue'
+import DetailCVPage from '../pages/DetailCVPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -57,20 +58,26 @@ const router = createRouter({
     {
       path: '/about',
       component: AboutPage
+    },
+    {
+      path: '/detail',
+      name: 'detailCV',
+      component: DetailCVPage
     }
   ]
 })
 
 router.beforeEach((to, from, next) => {
-  const loggedIn = !!localStorage.access_token;
-  if (loggedIn && to.path === "/login") {
-    next("/")
-  } if (loggedIn && to.path === "/register") {
-    next("/")
-  } else if (!loggedIn && to.path === "/dashboard") {
-    next("/login")
-  } else if (!loggedIn && to.path === "/getPremium") {
-    next("/login")
+  const loggedIn = !!localStorage.access_token
+  if (loggedIn && to.path === '/login') {
+    next('/')
+  }
+  if (loggedIn && to.path === '/register') {
+    next('/')
+  } else if (!loggedIn && to.path === '/dashboard') {
+    next('/login')
+  } else if (!loggedIn && to.path === '/getPremium') {
+    next('/login')
   } else {
     next()
   }
