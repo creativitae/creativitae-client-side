@@ -38,7 +38,8 @@ export default {
         Home
       </a>
 
-      <a class="flex text-gray-600 hover:text-theme-red cursor-pointer transition-colors duration-300">
+      <a @click.prevent="$router.push('/about')"
+      class="flex text-gray-600 hover:text-theme-red cursor-pointer transition-colors duration-300">
         About
       </a>
 
