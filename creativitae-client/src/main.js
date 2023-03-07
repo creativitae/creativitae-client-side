@@ -13,7 +13,10 @@ import {
   FaRegularTrashAlt,
   FaArrowAltCircleLeft,
   FaArrowAltCircleRight,
-  HiLockClosed
+  HiLockClosed,
+  BiPlusSquareFill,
+  LaPlusSquare,
+  LaMinusSquare
 } from 'oh-vue-icons/icons'
 
 import App from './App.vue'
@@ -36,7 +39,10 @@ addIcons(
   FaEdit,
   FaArrowAltCircleLeft,
   FaArrowAltCircleRight,
-  HiLockClosed
+  HiLockClosed,
+  BiPlusSquareFill,
+  LaPlusSquare,
+  LaMinusSquare
 )
 app.component('v-icon', OhVueIcon)
 app.use(pinia)
