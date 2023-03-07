@@ -69,7 +69,6 @@ export default {
       <!-- Login -->
       <a v-if="loggedIn === false" @click.prevent="$router.push('/login')"
         class="flex text-gray-600 hover:text-theme-red cursor-pointer transition-colors duration-300">
-
         <svg class="fill-current h-5 w-5 mr-2 mt-0.5" xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="24" height="24" viewBox="0 0 24 24">
           <path
