@@ -58,11 +58,15 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const loggedIn = !!localStorage.access_token;
-  if(loggedIn && to.path === "/login") {
+  if (loggedIn && to.path === "/login") {
     next("/")
-  }if(loggedIn && to.path === "/register"){
+  } if (loggedIn && to.path === "/register") {
     next("/")
-  }else{
+  } else if (!loggedIn && to.path === "/dashboard") {
+    next("/login")
+  } else if (!loggedIn && to.path === "/getPremium") {
+    next("/login")
+  } else {
     next()
   }
 })
