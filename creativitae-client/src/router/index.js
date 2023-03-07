@@ -8,6 +8,7 @@ import GetPremium from '../pages/GetPremiumPage.vue'
 import Callbacks from '../components/Callback.vue'
 import LoginLinkedin from '../components/LoginLinkedIn.vue'
 import Resume1 from '../templates/Resume1.vue'
+import UploadImg from '../components/UploadImg.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -47,6 +48,10 @@ const router = createRouter({
     {
       path: '/create-cv',
       component: Resume1
+    },
+    {
+      path: '/uploadImg',
+      component: UploadImg
     }
   ]
 })

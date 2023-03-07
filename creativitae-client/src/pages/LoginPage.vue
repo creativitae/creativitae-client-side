@@ -2,11 +2,11 @@
 <script>
 import { mapActions, mapState, mapWritableState } from 'pinia';
 import { useMainStore } from '../stores/main';
-import LoginLinkedin from '../components/LoginLinkedin.vue';
+import ShareButtonLinkedin from '../components/ShareButton.vue'
 
 export default {
   components: {
-    LoginLinkedin,
+    ShareButtonLinkedin
   },
   data() {
     return {
@@ -18,13 +18,16 @@ export default {
     }
   },
   methods: {
-    ...mapActions(useMainStore, ['doLogin']),
+    ...mapActions(useMainStore, ['doLogin', 'callback', 'doLinkedinLogin']),
     login(formData) {
       this.doLogin(formData)
     },
     toggle() {
       this.showPassword = this.showPassword ? false : true;
     },
+    linkedinLogin() {
+      this.doLinkedinLogin()
+    }
   }
 }
 </script>
@@ -83,7 +86,6 @@ export default {
                 <a href="#" class="text-theme-red hover:text-red-400">
                   Forgot your password?
                 </a>
-                <LoginLinkedin />
               </div>
             </div>
             <div>
@@ -118,9 +120,9 @@ export default {
               <span>Google</span>
             </button>
 
-            <button type="submit"
-              class="w-full flex items-center justify-center mb-6 md:mb-0 border border-gray-300 hover:border-theme-red hover:bg-theme-red hover:text-white text-sm text-gray-500 p-3  rounded-lg tracking-wide font-medium  cursor-pointer transition ease-in duration-[50]">
-              <svg class="w-4 mr-2" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve"
+            <button type="submit" @click.prevent="linkedinLogin"
+              class="w-full flex items-center justify-center mb-6 md:mb-0 border border-gray-300 hover:border-red-400 hover:bg-red-400 hover:text-white text-sm text-gray-500 p-3  rounded-lg tracking-wide font-medium  cursor-pointer transition ease-in duration-[50]">
+              <!-- <svg class="w-4 mr-2" viewBox="0 0 100 100" style="enable-background:new 0 0 100 100" xml:space="preserve"
                 xmlns="http://www.w3.org/2000/svg">
                 <g id="Layer_1" />
                 <g id="Layer_2">
@@ -130,14 +132,16 @@ export default {
                     d="M57.46 64.104h11.125l2.117-13.814H57.46v-8.965c0-3.779 1.85-7.463 7.781-7.463h6.021V22.101c-12.894-2.323-28.385-1.616-28.722 17.66V50.29H30.417v13.814H42.54V97.5h14.92V64.104z"
                     style="fill:#f1f1f1" />
                 </g>
-              </svg>
+              </svg> -->
+              <span class="w-4 mr-2"><svg width="24" height="24" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg"><path fill="#0077B5" d="M7.86 7.704V18.5H4.214V7.704H7.86zm.24-3.34c0 1.037-.792 1.867-2.063 1.867h-.023C4.791 6.23 4 5.4 4 4.365 4 3.306 4.815 2.5 6.061 2.5c1.247 0 2.015.806 2.038 1.865zM21 12.31v6.19h-3.644v-5.776c0-1.45-.527-2.44-1.846-2.44-1.007 0-1.606.667-1.87 1.311-.096.231-.12.553-.12.876V18.5H9.876s.048-9.783 0-10.796h3.644v1.53c.484-.735 1.35-1.783 3.285-1.783C19.202 7.45 21 8.994 21 12.31z"></path></svg></span>
               <!-- <svg class="w-4" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" fill-rule="evenodd" d="M9.945 22v-8.834H7V9.485h2.945V6.54c0-3.043 1.926-4.54 4.64-4.54 1.3 0 2.418.097 2.744.14v3.18h-1.883c-1.476 0-1.82.703-1.82 1.732v2.433h3.68l-.736 3.68h-2.944L13.685 22"></path></svg> -->
               <span>LinkedIn</span>
             </button>
-
           </div>
         </div>
         <div class="mt-7 text-center text-gray-300 text-xs">
+          <ShareButtonLinkedin />
+          <p> ini untuk share linked in</p>
         </div>
       </div>
     </div>
