@@ -52,7 +52,7 @@ export default {
               Up</a></p>
         </div>
         <div class="space-y-6">
-          <form @submit.prevent="$event => doLogin(formData)" class="space-y-6">
+          <form @submit.prevent="doLogin(formData)" class="space-y-6">
             <div class="">
               <input v-model="formData.email"
                 class=" w-full text-sm  px-4 py-3 bg-gray-200 focus:bg-gray-100 border  border-gray-200 rounded-lg focus:outline-none focus:border-theme-red"

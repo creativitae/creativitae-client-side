@@ -26,7 +26,7 @@ export default {
           search to the next level. Our app offers a wide range of design options and features that allow you to create a
           resume that truly stands out from the rest, all with ease of use in mind.
         </p>
-        <a
+        <a @click.prevent="$router.push('/dashboard')"
           class="py-2 px-4 bg-theme-red rounded-md font-bold text-white my-10 drop-shadow-md cursor-pointer hover:scale-110 transition-all">
           Create your own
         </a>

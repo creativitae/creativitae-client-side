@@ -3,7 +3,7 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 const Toast = Swal.mixin({
   toast: true,
-  position: 'top-right',
+  position: 'top-end',
   iconColor: 'white',
   customClass: {
     popup: 'colored-toast'
@@ -13,8 +13,8 @@ const Toast = Swal.mixin({
   timerProgressBar: true
 })
 
-const BASE_URL = 'http://localhost:3000'
-const BASE_NGROK = `https://f11f-139-228-111-126.ap.ngrok.io`
+// const BASE_URL = 'http://localhost:3000'
+const BASE_URL = `https://5790-139-228-111-126.ap.ngrok.io`
 
 export const useMainStore = defineStore('main', {
   state: () => {
@@ -23,7 +23,9 @@ export const useMainStore = defineStore('main', {
       loggedIn: false,
       LinkedinUser: false,
       emailLinkedin: {},
-      templates: []
+      templates: [],
+      userPremium: {},
+      isPremium: {}
     }
   },
 
@@ -37,9 +39,19 @@ export const useMainStore = defineStore('main', {
           url: `${BASE_URL}/public/register`,
           data: formData
         })
+        await Toast.fire({
+          icon: 'success',
+          text: `You can login now!`,
+          titleText: 'Register Success'
+        })
         this.router.push('/login')
       } catch (err) {
         console.log(err)
+        await Toast.fire({
+          icon: 'error',
+          titleText: 'Oops!',
+          text: err.response.data.message
+        })
       }
     },
 
@@ -51,22 +63,39 @@ export const useMainStore = defineStore('main', {
           data: formData
         })
         localStorage.setItem('access_token', data.access_token)
+        localStorage.setItem('isPremium', data.isPremium)
+        localStorage.setItem('email', data.email)
+        localStorage.setItem('username', data.username)
+        console.log(data);
         this.loggedIn = true
         this.router.push('/')
         await Toast.fire({
           icon: 'success',
-          title: 'welcome back',
-          text: 'Success Login'
+          text: `Welcome ${data.username}!!`,
+          titleText: 'Success Login'
         })
       } catch (err) {
-        console.log(err)
+        await Toast.fire({
+          icon: 'error',
+          titleText: 'Oops!',
+          text: err.response.data.message
+        })
       }
     },
 
     async doLogout() {
       try {
         localStorage.removeItem("access_token")
+        localStorage.removeItem("isPremium")
+        localStorage.removeItem("email")
+        localStorage.removeItem("username")
         this.loggedIn = false
+        this.router.push('/')
+        await Toast.fire({
+          icon: 'success',
+          text: `Good Bye`,
+          titleText: 'Success Logout'
+        })
       } catch (error) {
         console.log(error);
       }
@@ -169,10 +198,14 @@ export const useMainStore = defineStore('main', {
       try {
         const data = await axios({
           method: 'POST',
-          url: `${BASE_URL}/xendit` // TODO - THIS SHOULD BE WIRED TO SERVER
+          url: `${BASE_URL}/payment`, // TODO - THIS SHOULD BE WIRED TO SERVER
+          headers: {
+            access_token: localStorage.getItem('access_token')
+          }
         })
         this.payment = data
-        // this.statusTemplate()
+        localStorage.setItem("isPremium", true)
+        console.log(data);
       } catch (error) {
         console.log(error.response.data)
       }
@@ -182,12 +215,13 @@ export const useMainStore = defineStore('main', {
       try {
         let { data } = await axios({
           method: 'GET',
-          url: `${BASE_NGROK}/templates`,
+          url: `${BASE_URL}/templates`,
           // TODO - HAPUS PAS KE PRODUCTION
           headers: {
             'ngrok-skip-browser-warning': 'any'
           }
         })
+        console.log(data);
 
         this.templates = data
       } catch (err) {
