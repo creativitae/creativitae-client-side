@@ -3,10 +3,12 @@ import { mapActions, mapState, mapWritableState } from 'pinia';
 import { useMainStore } from '../stores/main';
 import { TransitionFade } from '@morev/vue-transitions';
 import UploadImg from '../components/UploadImg.vue'
-import print from 'vue3-print-nb'
 import ShareButton from '../components/ShareButton.vue';
 import domtoimage from "dom-to-image-more";
-import { FileSaver, saveAs } from 'file-saver';
+import { saveAs } from 'file-saver';
+import html2canvas from 'html2canvas';
+import { jsPDF } from "jspdf";
+
 
 import interact from "interactjs";
 export default {
@@ -145,6 +147,7 @@ export default {
     this.initInteract()
   },
   methods: {
+    ...mapActions(useMainStore, ['uploadResult']),
     initInteract() {
       interact('.experience-section').draggable({
         listeners: {
@@ -189,29 +192,40 @@ export default {
     deleteFormElement(key, index) {
       this.formData[key] = this.formData[key]?.filter((_, i) => i !== index)
     },
-    printDiv: async function () {
+    async shareLinkedIn() {
       let node = this.$refs.printThisArea
-      let daleman = null
-      await domtoimage
-        .toPng(node)
-        .then(function (dataUrl) {
-          daleman = dataUrl
-        })
-        .catch(function (error) {
-          console.error("oops, something went wrong!", error);
-        });
-
-      this.imagebuatan = daleman
-
+      let dataUrl
+      await html2canvas(node, { useCORS: true }).then(function (canvas) {
+        dataUrl = canvas.toDataURL('image/png')
+      });
+      // this.imagebuatan = dataUrl
+      this.uploadResult(dataUrl)
     },
     downloadPNG() {
       let node = this.$refs.printThisArea
-      domtoimage.toBlob(node).then(function (blob) {
-        console.log(blob);
-        FileSaver.saveAs(blob, "my-CV.png");
+      html2canvas(node, { useCORS: true }).then(function (canvas) {
+        canvas.toBlob(function (blob) {
+          saveAs(blob, "my-resume.png");
+        });
       });
     },
-
+    downloadJPEG() {
+      let node = this.$refs.printThisArea
+      html2canvas(node, { useCORS: true }).then(function (canvas) {
+        canvas.toBlob(function (blob) {
+          saveAs(blob, "my-resume.jpeg");
+        });
+      });
+    },
+    downloadPDF() {
+      let doc = new jsPDF();
+      let node = this.$refs.printThisArea
+      html2canvas(node, { useCORS: true }).then(function (canvas) {
+        let dataUrl = canvas.toDataURL('image/png')
+        doc.addImage(dataUrl, 'png', 0, 0, 210, 297);
+        doc.save('converted.pdf');
+      });
+    },
     toggleForm() {
       if (this.showForm) {
         this.showForm = false
@@ -229,11 +243,10 @@ export default {
       class="dashboard-content h-fit flex justify-between items-start bg-slate-200/80 shadow-inner rounded-2xl overflow-hidden p-8">
 
       <!-- OUTPUT AREA -->
-      <div class="print-area sticky top-0 w-fit h-fit border" id="printThis" ref="printThisArea">
+      <div class="print-area sticky top-0 w-fit h-fit" id="printThis" ref="printThisArea">
         <!-- TEMPLATE GOES HERE -->
         <img src="/templates/resume1/resume1-2.svg" class="left-8 w-[600px] h-fit sticky top-0" />
 
-        <!-- Output here -->
         <!-- NAME AND TITLE -->
         <div class="name-title flex flex-col justify-start absolute z-[11]"
           :style="`top: ${name_title.posY}px; left: ${name_title.posX}px`" data-x="0" data-y="0">
@@ -274,8 +287,8 @@ export default {
         <div
           class="absolute top-[555px] left-[30px] font-thin text-white text-[0.6rem] w-[30%] h-fit text-justify flex gap-y-2 gap-x-4 flex-wrap">
           <p v-for="i in formData.skills"
-            class="font-thin text-white text-[0.6rem] w-[45%] leading-3 align-middle relative pl-[10px]">
-            <span class="text-[1.5rem] font-bold absolute top-[-2px] left-0">·</span>{{ i }}
+            class="font-thin text-white text-[0.6rem] w-[45%] leading-3 align-middle relative">
+            {{ i }}
           </p>
         </div>
 
@@ -287,11 +300,10 @@ export default {
         <div
           class="absolute top-[705px] left-[30px] font-thin text-white text-[0.6rem] w-[30%] h-fit text-justify flex flex-col gap-y-2 gap-x-4 flex-wrap">
           <p v-for="i in formData.languages"
-            class="font-thin text-white text-[0.6rem] w-[45%] leading-3 align-middle relative pl-[10px]">
-            <span class="text-[1.5rem] font-bold absolute top-[-2px] left-0">·</span>{{ i }}
+            class="font-thin text-white text-[0.6rem] w-[45%] leading-3 align-middle relative">
+            {{ i }}
           </p>
         </div>
-
 
         <!-- WORK EXP DRAGABLE -->
         <div v-if="formData.workExperiences.length > 0" :style="`top: ${work_exp.posY}px; left: ${work_exp.posX}px`"
@@ -385,7 +397,6 @@ export default {
           </div>
 
         </div>
-
       </div>
 
       <div class="div w-1/2 h-fit">
@@ -393,6 +404,7 @@ export default {
           class="px-4 py-2 bg-theme-red w-full text-white font-bold rounded-xl drop-shadow-md hover:bg-red-400 transition-all mb-10">
           Edit Mode
         </button>
+
         <!-- MAIN FORM AREA -->
         <transition-fade :duration="{ enter: 1000, leave: 1000 }">
           <div v-if="showForm" class="container w-full h-[841px] overflow-scroll  py-4">
@@ -692,21 +704,60 @@ export default {
               <div class="container w-full bg-white rounded-xl h-fit px-8 py-4 drop-shadow-md">
                 <p class="text-center font-bold text-[1.5rem] text-theme-red mb-10">Share Your Creation!</p>
                 <div class="container w-full h-fit flex justify-around items-center">
-                  <button @click.prevent="downloadPNG"
-                    class="inner-content bg-theme-red px-8 py-2 text-white font-bold rounded-lg">
-                    Download CV
-                  </button>
-                  <button @click.prevent="printDiv"
+
+                  <!-- DOWNLOAD CV BUTTON -->
+                  <div class="flex justify-center">
+                    <div>
+                      <div class="relative" data-te-dropdown-ref>
+                        <button
+                          class="flex items-center whitespace-nowrap rounded-lg bg-theme-red px-8 py-2 leading-normal font-bold text-white transition duration-150 ease-in-out hover:bg-red-400  focus:outline-none focus:ring-0  motion-reduce:transition-none"
+                          type="button" id="dropdownMenuButton1" data-te-dropdown-toggle-ref aria-expanded="false">
+                          Download CV
+                          <span class="ml-2 w-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                              class="h-5 w-5">
+                              <path fill-rule="evenodd"
+                                d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                                clip-rule="evenodd" />
+                            </svg>
+                          </span>
+                        </button>
+                        <ul
+                          class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+                          aria-labelledby="dropdownMenuButton1" data-te-dropdown-menu-ref>
+                          <li>
+                            <a @click.prevent="downloadPDF"
+                              class="block cursor-pointer w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                              data-te-dropdown-item-ref>As PDF</a>
+                          </li>
+                          <li>
+                            <a @click.prevent="downloadPNG"
+                              class="block cursor-pointer w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                              data-te-dropdown-item-ref>As PNG</a>
+                          </li>
+                          <li>
+                            <a @click.prevent="downloadJPEG"
+                              class="block cursor-pointer w-full whitespace-nowrap bg-transparent py-2 px-4 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-neutral-600"
+                              data-te-dropdown-item-ref>As JPEG</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- SHARE WITH LINKEDIN -->
+                  <button @click.prevent="shareLinkedIn"
                     class="inner-content bg-theme-red px-8 py-2 text-white font-bold rounded-lg">
                     Share with Linkedin
                   </button>
+
+                  <!-- MAILTO -->
                   <button class="inner-content bg-theme-red px-8 py-2 text-white font-bold rounded-lg">
                     Email
                   </button>
                   <ShareButton :image="imagebuatan" />
                 </div>
               </div>
-
             </div>
           </div>
         </transition-fade>
