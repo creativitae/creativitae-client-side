@@ -4,13 +4,22 @@ import { useMainStore } from '../stores/main';
 
 export default {
   computed: {
-    ...mapState(useMainStore, ['templates'])
+    ...mapState(useMainStore, ['templates']),
+    parseString(string) {
+      console.log(JSON.parse(string));
+    }
+    
   },
   methods: {
-    ...mapActions(useMainStore, ['fetchTemplates'])
+    ...mapActions(useMainStore, ['fetchTemplates']),
+    parseString(string) {
+      console.log(JSON.parse(string));
+    }
   },
   created() {
     this.fetchTemplates()
+    // this.parseString()
+   
   }
 }
 </script>
@@ -42,8 +51,8 @@ export default {
       <div class="template-preview flex justify-center items-center w-full h-fit flex-wrap gap-x-[10rem] gap-y-[4rem]">
         <!-- CV TEMPLATES -->
         <div v-for="template in templates" :key="template.id"
-          class="cv-card bg-slate-300 rounded-md w-[400px] h-[564px] flex justify-center items-center">
-          <p class="text-[2rem] text-slate-500/50">{{ template.name }}</p>
+          class="cv-card rounded-md w-[400px] h-[564px] flex justify-center items-center overflow-hidden drop-shadow-lg">
+          <img :src="template.image.dummy" />
         </div>
       </div>
     </div>
