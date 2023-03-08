@@ -28,7 +28,7 @@ export default {
     <div
       class="dashboard-content h-fit min-h-[70vh] flex flex-col justify-start items-center bg-slate-200/80 shadow-inner w-full rounded-2xl">
       <div class="create-button w-full px-8 py-8">
-        <button
+        <button @click.prevent="$router.push('/templates')"
           class="px-4 py-2 bg-theme-red w-full text-white font-bold rounded-xl drop-shadow-md hover:bg-red-400 transition-all">Create
           new CV
         </button>

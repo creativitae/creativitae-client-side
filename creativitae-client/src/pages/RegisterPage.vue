@@ -61,7 +61,7 @@ export default {
             <div class="relative" x-data="{ show: true }">
               <input v-model="formData.password" placeholder="Password" :type="!showPassword ? 'password' : 'text'"
                 autocomplete="off"
-                class="text-sm text-gray-200 px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-theme-red">
+                class="text-sm px-4 py-3 rounded-lg w-full bg-gray-200 focus:bg-gray-100 border border-gray-200 focus:outline-none focus:border-theme-red">
               <div class="flex items-center absolute inset-y-0 right-0 mr-3  text-sm leading-5">
               </div>
               <div @click="toggle" v-if="!showPassword"

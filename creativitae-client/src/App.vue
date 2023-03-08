@@ -1,11 +1,23 @@
 <script>
 import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue'
+import { mapWritableState } from 'pinia'
+import { useMainStore } from './stores/main'
 
 export default {
   components: {
     Navbar,
     Footer
+  },
+  computed: {
+    ...mapWritableState(useMainStore, ['loggedIn'])
+  },
+  created() {
+    if(localStorage.access_token) {
+      this.loggedIn = true
+    }else{
+      this.loggedIn = false
+    }
   }
 }
 

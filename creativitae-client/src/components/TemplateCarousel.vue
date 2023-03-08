@@ -55,8 +55,6 @@ export default defineComponent({
       this.$refs.templateCarousel.prev()
     },
 
-
-
   },
   computed: {
     ...mapState(useMainStore, ['templates'])
