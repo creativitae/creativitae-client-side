@@ -59,6 +59,8 @@ export const useMainStore = defineStore('main', {
           method: 'get',
           url: `${BASE_URL}/users/linkedin-request-auth`
         })
+        // console.log(data);
+        // console.log(data.url, '<<<<<');
         window.open(data.url, '_blank')
       } catch (err) {
         console.log(err)
@@ -67,6 +69,7 @@ export const useMainStore = defineStore('main', {
 
     async doLinkedinAuth(code) {
       try {
+        // console.log(code, 'ini code');
         let { data } = await axios({
           method: 'post',
           url: `${BASE_URL}/users/linkedin-user-auth`,
@@ -115,11 +118,11 @@ export const useMainStore = defineStore('main', {
             code
           }
         })
-        console.log(data2, 'ini data2')
-        let payload = {
-          username: data.username,
-          email: data2.email
-        }
+          // console.log(data2, 'ini data2')
+          let payload = {
+            username: data.username,
+            email: data2.email
+          }
         // console.log(data2, data, 'ini mau login');
         await this.LinkedinFinalAuth(payload)
       } catch (err) {
@@ -137,6 +140,10 @@ export const useMainStore = defineStore('main', {
         })
 
         localStorage.setItem('access_token', data.access_token)
+        localStorage.setItem('email', data.email)
+        localStorage.setItem('username', data.username)
+        localStorage.setItem('isPremium', data.isPremium)
+        
         this.loggedIn = true
         this.LinkedinUser = true
         this.router.push('/')
