@@ -10,6 +10,7 @@ import LoginLinkedin from '../components/LoginLinkedIn.vue'
 import CreateCvPage from '../pages/CreateCvPage.vue'
 import UploadImg from '../components/UploadImg.vue'
 import AboutPage from '../pages/AboutPage.vue'
+import ContactPage from '../pages/ContactPage.vue'
 import DetailCVPage from '../pages/DetailCVPage.vue'
 
 const router = createRouter({
@@ -58,6 +59,10 @@ const router = createRouter({
     {
       path: '/about',
       component: AboutPage
+    },
+    {
+      path: '/contact',
+      component: ContactPage
     },
     {
       path: '/detail',

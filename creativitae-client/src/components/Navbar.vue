@@ -48,7 +48,8 @@ export default {
         Premium Membership
       </a>
 
-      <a class="flex text-gray-600 hover:text-theme-red cursor-pointer transition-colors duration-300">
+      <a @click.prevent="$router.push('/contact')"
+      class="flex text-gray-600 hover:text-theme-red cursor-pointer transition-colors duration-300">
         Contact
       </a>
     </div>

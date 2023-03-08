@@ -12,7 +12,7 @@ export default {
 <template>
   <div class="w-full h-fit bg-theme-red px-12 pb-12 pt-6 flex flex-col justify-center items-center">
     <div class="links flex flex-row justify-center items-center">
-      <a
+      <a @click.prevent="$router.push('/about')"
         class="font-bold text-white/80 border-r-[0.5px] border-white px-8 min-w-[150px] text-center cursor-pointer hover:text-white transition-all ">About
         Us</a>
       <a
