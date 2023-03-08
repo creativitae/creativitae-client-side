@@ -205,6 +205,7 @@ export const useMainStore = defineStore('main', {
         })
         this.payment = data
         localStorage.setItem("isPremium", true)
+        // this.isPremium = localStorage.getItem("isPremium")
         console.log(data);
       } catch (error) {
         console.log(error.response.data)

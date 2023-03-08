@@ -10,6 +10,7 @@ import LoginLinkedin from '../components/LoginLinkedIn.vue'
 import Resume1 from '../templates/Resume1.vue'
 import UploadImg from '../components/UploadImg.vue'
 import AboutPage from '../pages/AboutPage.vue'
+import ContactPage from '../pages/ContactPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -57,6 +58,10 @@ const router = createRouter({
     {
       path: '/about',
       component: AboutPage
+    },
+    {
+      path: '/contact',
+      component: ContactPage
     }
   ]
 })
