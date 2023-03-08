@@ -30,7 +30,6 @@ export default {
     
 
   },
-  props: ['image'],
   created() {
     console.log(this.image, 'inii image di ShareButton');
   },

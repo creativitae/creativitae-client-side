@@ -150,8 +150,8 @@ export default {
   },
   methods: {
     ...mapActions(useMainStore, ['uploadResult', 'getTemplateById', 'addTemplateToMyList', 'postPersonalDetail']),
-    handleForm(formData) {
-      console.log(formData);
+    async handleForm(formData) {
+      await this.shareLinkedIn()
       this.postPersonalDetail(formData)
       this.addTemplateToMyList(this.$route.params.templateId)
       this.toggleForm()
@@ -205,7 +205,7 @@ export default {
       Swal.fire({
         title: 'Uploading....',
         html: 'please wait for <b></b> milliseconds....',
-        timer: 6000,
+        timer: 3000,
         timerProgressBar: true,
         didOpen: () => {
           Swal.showLoading()
@@ -229,8 +229,9 @@ export default {
       await html2canvas(node, { useCORS: true }).then(function (canvas) {
         dataUrl = canvas.toDataURL('image/png')
       });
-
-      this.uploadResult(dataUrl)
+      await this.uploadResult(dataUrl)
+      // setTimeout(this.$refs.linkedin.$el.click(), 5000)
+      // await this.uploadResult(dataUrl)
     },
     downloadPNG() {
       let node = this.$refs.printThisArea
@@ -786,7 +787,7 @@ export default {
                   <button class="inner-content bg-theme-red px-8 py-2 text-white font-bold rounded-lg">
                     Email
                   </button>
-                  <ShareButton :image="imagebuatan" />
+                  <ShareButton ref="linkedin" style=";" />
                 </div>
               </div>
             </div>
