@@ -8,6 +8,8 @@ import UploadImg from '../components/UploadImg.vue'
 import ShareButton from '../components/ShareButton.vue';
 import html2canvas from 'html2canvas';
 import interact from "interactjs";
+import Swal from 'sweetalert2';
+
 export default {
   components: {
     UploadImg,
@@ -117,7 +119,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(useMainStore, ['uploadedProfilePicture','activeTemplate', 'getUploadedPP']),
+    ...mapState(useMainStore, ['uploadedProfilePicture', 'activeTemplate', 'getUploadedPP']),
     getSkills() {
       this.formData.skills = this.skill.trim().split(',').map(el => el.trim());
     },
@@ -199,6 +201,29 @@ export default {
       this.formData[key] = this.formData[key]?.filter((_, i) => i !== index)
     },
     async shareLinkedIn() {
+      let timerInterval
+      Swal.fire({
+        title: 'Uploading....',
+        html: 'please wait for <b></b> milliseconds....',
+        timer: 6000,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading()
+          const b = Swal.getHtmlContainer().querySelector('b')
+          timerInterval = setInterval(() => {
+            b.textContent = Swal.getTimerLeft()
+          }, 100)
+        },
+        willClose: () => {
+          clearInterval(timerInterval)
+        }
+      }).then((result) => {
+        /* Read more about handling dismissals below */
+        if (result.dismiss === Swal.DismissReason.timer) {
+          console.log('I was closed by the timer')
+        }
+      })
+
       let node = this.$refs.printThisArea
       let dataUrl
       await html2canvas(node, { useCORS: true }).then(function (canvas) {

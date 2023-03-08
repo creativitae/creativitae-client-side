@@ -9,8 +9,7 @@ export default {
     methods: {
         ...mapActions(useMainStore, ['xenditPayment']),
         handlePayment() {
-            console.log('masuk sini bro');
-            this.xenditPayment()
+        this.xenditPayment()
         },
     }
 }
@@ -39,8 +38,7 @@ export default {
                 <h3 class="sr-only">All-access features</h3>
                 <ul class="mt-8 space-y-8 text-sm leading-6 text-slate-700">
                     <li class="flex">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"
-                            class="h-8 w-8 flex-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32" class="h-8 w-8 flex-none">
                             <path fill="#fff" d="M0 0h32v32H0z"></path>
                             <path fill="#E0F2FE"
                                 d="M23 22l7-4v7l-7 4v-7zM9 22l7-4v7l-7 4v-7zM16 11l7-4v7l-7 4v-7zM2 18l7 4v7l-7-4v-7zM9 7l7 4v7l-7-4V7zM16 18l7 4v7l-7-4v-7z">
@@ -50,38 +48,39 @@ export default {
                             </path>
                         </svg>
                         <p class="ml-6"><strong class="font-semibold text-slate-900">Create more than one CV</strong> —
-                            With our premium CV creation feature, you can create more than one unique and attractive CV to suit the position you are applying for.</p>
-                    </li>
-                    <li class="flex">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"
-                            class="h-8 w-8 flex-none">
-                            <path fill="#fff" d="M0 0h32v32H0z"></path>
-                            <rect width="23" height="22" x="3" y="5" stroke="#dc2625" stroke-linejoin="round"
-                                stroke-width="1.5" rx="2"></rect>
-                            <rect width="10" height="18" x="19" y="9" fill="#E0F2FE" stroke="#dc2625"
-                                stroke-linejoin="round" stroke-width="1.5" rx="2"></rect>
-                            <circle cx="6" cy="8" r="1" fill="#0EA5E9"></circle>
-                            <circle cx="9" cy="8" r="1" fill="#0EA5E9"></circle>
-                            <path stroke="#0EA5E9" stroke-width="1.5" d="M3 11h16"></path>
-                        </svg>
-                        <p class="ml-6"><strong class="font-semibold text-slate-900">Custom Template Designs</strong> —
-                            Premium users can choose from a variety of specially designed templates to make their CV look professional and stand out from the crowd.</p>
+                            With our premium CV creation feature, you can create more than one unique and attractive CV to
+                        suit the position you are applying for.</p>
+                </li>
+                <li class="flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32" class="h-8 w-8 flex-none">
+                        <path fill="#fff" d="M0 0h32v32H0z"></path>
+                        <rect width="23" height="22" x="3" y="5" stroke="#dc2625" stroke-linejoin="round"
+                            stroke-width="1.5" rx="2"></rect>
+                        <rect width="10" height="18" x="19" y="9" fill="#E0F2FE" stroke="#dc2625"
+                            stroke-linejoin="round" stroke-width="1.5" rx="2"></rect>
+                        <circle cx="6" cy="8" r="1" fill="#0EA5E9"></circle>
+                        <circle cx="9" cy="8" r="1" fill="#0EA5E9"></circle>
+                        <path stroke="#0EA5E9" stroke-width="1.5" d="M3 11h16"></path>
+                    </svg>
+                    <p class="ml-6"><strong class="font-semibold text-slate-900">Custom Template Designs</strong> —
+                            Premium users can choose from a variety of specially designed templates to make their CV look
+                            professional and stand out from the crowd.</p>
                     </li>
                     <!-- <li class="flex"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 32"
-                            class="h-8 w-8 flex-none">
-                            <path fill="#fff" d="M0 0h32v32H0z"></path>
-                            <path fill="#E0F2FE"
-                                d="M13.168 18.828a4 4 0 110-5.656L15.997 16l1.5-1.5 1.328-1.328a4 4 0 110 5.656L15.996 16l-1.499 1.5-1.329 1.328z">
-                            </path>
-                            <path stroke="#dc2625" stroke-linecap="round" stroke-width="1.5"
-                                d="M14.497 17.5l-1.329 1.328a4 4 0 110-5.656l5.657 5.656a4 4 0 100-5.656L17.496 14.5">
-                            </path>
-                            <circle cx="16" cy="16" r="14" stroke="#dc2625" stroke-width="1.5"></circle>
-                        </svg>
-                        <p class="ml-6"><strong class="font-semibold text-slate-900">Lifetime access</strong> — get instant
-                            access to everything we have today, plus any new components and templates we add in the future.
-                        </p>
-                    </li> -->
+                                class="h-8 w-8 flex-none">
+                                <path fill="#fff" d="M0 0h32v32H0z"></path>
+                                <path fill="#E0F2FE"
+                                    d="M13.168 18.828a4 4 0 110-5.656L15.997 16l1.5-1.5 1.328-1.328a4 4 0 110 5.656L15.996 16l-1.499 1.5-1.329 1.328z">
+                                </path>
+                                <path stroke="#dc2625" stroke-linecap="round" stroke-width="1.5"
+                                    d="M14.497 17.5l-1.329 1.328a4 4 0 110-5.656l5.657 5.656a4 4 0 100-5.656L17.496 14.5">
+                                </path>
+                                <circle cx="16" cy="16" r="14" stroke="#dc2625" stroke-width="1.5"></circle>
+                            </svg>
+                            <p class="ml-6"><strong class="font-semibold text-slate-900">Lifetime access</strong> — get instant
+                                access to everything we have today, plus any new components and templates we add in the future.
+                            </p>
+                        </li> -->
                 </ul>
                 <div class="relative -mx-5 mt-8 ring-1 ring-slate-900/5 sm:mx-0 sm:rounded-2xl">
                     <div class="flex absolute -bottom-px left-1/2 -ml-48 h-[2px] w-96">
@@ -98,26 +97,25 @@ export default {
                             class="-ml-[100%] w-full flex-none blur-[1px] [background-image:linear-gradient(90deg,rgba(56,189,248,0)_0%,#0EA5E9_32.29%,rgba(236,72,153,0.3)_67.19%,rgba(236,72,153,0)_100%)]">
                         </div>
                     </div>
-                    <div v-if="isPremium == 'true'" class="relative flex flex-col bg-red-600 py-8 px-5 sm:rounded-2xl">
+                    <div v-if="isPremium === 'true'" class="relative flex flex-col bg-red-600 py-8 px-5 sm:rounded-2xl">
                         <p class="flex items-center justify-center"><span
-                                class="text-[2.5rem] leading-none text-white">You're <span
-                                    class="font-bold">already be a Premium</span></span><span class="ml-3 text-sm"><span
+                                class="text-[2.5rem] leading-none text-white">You're <span class="font-bold">already be a
+                                    Premium</span></span><span class="ml-3 text-sm"><span
                                     class="text-red-500"></span></span></p>
                         <p class="order-last -mx-1 mt-4 flex justify-center text-sm leading-6 text-white sm:space-x-2">
                             <span class="hidden sm:inline">Lifetime access.</span>
                             <span class="hidden sm:inline">
                                 Unlimited projects.
                             </span>
-                                <span class="hidden sm:inline">Free updates.</span>
-                                <span
-                                class="sm:hidden">Includes lifetime access and free updates.
+                            <span class="hidden sm:inline">Free updates.</span>
+                            <span class="sm:hidden">Includes lifetime access and free updates.
                             </span>
                         </p>
                     </div>
-                    <div v-else-if="isPremium == 'false'" class="relative flex flex-col bg-red-600 py-8 px-5 sm:rounded-2xl">
-                        <p class="flex items-center justify-center"><span
-                                class="text-[2.5rem] leading-none text-white">IDR. <span
-                                    class="font-bold">30.000,00</span></span><span class="ml-3 text-sm"><span
+                    <div v-if="isPremium === 'false'"
+                        class="relative flex flex-col bg-red-600 py-8 px-5 sm:rounded-2xl">
+                        <p class="flex items-center justify-center"><span class="text-[2.5rem] leading-none text-white">IDR.
+                                <span class="font-bold">30.000,00</span></span><span class="ml-3 text-sm"><span
                                     class="font-semibold text-white">one-time payment</span><br><span
                                     class="text-slate-500"></span></span></p>
                         <p class="order-last -mx-1 mt-4 flex justify-center text-sm leading-6 text-white sm:space-x-2">
@@ -129,8 +127,7 @@ export default {
                             </span>
                             <span class="hidden sm:inline">Free updates.
                             </span>
-                            <span
-                                class="sm:hidden">Includes lifetime access and free updates.</span>
+                            <span class="sm:hidden">Includes lifetime access and free updates.</span>
                         </p>
                         <a v-if="!payment?.data?.invoice_url" @click.prevent="handlePayment"
                             class="inline-flex justify-center rounded-lg text-sm font-semibold py-2 px-3 bg-[#a5dc55] text-white hover:bg-[#a5dc86] mt-6 w-full"
@@ -147,7 +144,7 @@ export default {
                         </a>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>

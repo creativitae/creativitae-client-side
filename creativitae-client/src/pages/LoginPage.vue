@@ -151,8 +151,6 @@ export default {
           </div>
         </div>
         <div class="mt-7 text-center text-gray-300 text-xs">
-          <ShareButtonLinkedin />
-          <p> ini untuk share linked in</p>
         </div>
     </div>
   </div>

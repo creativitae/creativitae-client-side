@@ -10,11 +10,12 @@ export default {
     Footer
   },
   computed: {
-    ...mapWritableState(useMainStore, ['loggedIn'])
+    ...mapWritableState(useMainStore, ['loggedIn', 'isPremium'])
   },
   created() {
     if(localStorage.access_token) {
       this.loggedIn = true
+      this.isPremium = localStorage.isPremium
     }else{
       this.loggedIn = false
     }

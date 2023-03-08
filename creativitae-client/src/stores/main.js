@@ -25,7 +25,7 @@ export const useMainStore = defineStore('main', {
       emailLinkedin: {},
       templates: [],
       userPremium: {},
-      isPremium: localStorage.getItem('isPremium'),
+      isPremium: false,
       preview: null,
       image: null,
       preview_list: [],
@@ -33,7 +33,8 @@ export const useMainStore = defineStore('main', {
       fileName: {},
       outputServer: {},
       activeTemplate: {},
-      uploadedCV: ''
+      uploadedCV: '',
+      myTemplates: []
     }
   },
 
@@ -125,7 +126,7 @@ export const useMainStore = defineStore('main', {
             'ngrok-skip-browser-warning': 'any'
           }
         })
-        window.open(data.url, '_blank')
+        window.open(data.url, '_self')
       } catch (err) {
         console.log(err)
       }
@@ -200,7 +201,16 @@ export const useMainStore = defineStore('main', {
         })
 
         localStorage.setItem('access_token', data.access_token)
+        localStorage.setItem('username', data.email)
+        localStorage.setItem('isPremium', data.isPremium)
         this.loggedIn = true
+        Toast.fire({
+          title: 'Great!',
+          text: `Welcome back, ${data.username}`,
+          icon: 'success',
+          confirmButtonText: 'Cool!'
+        })
+        localStorage.setItem('username', data.username)
         this.LinkedinUser = true
         this.router.push('/')
       } catch (err) {
@@ -213,12 +223,13 @@ export const useMainStore = defineStore('main', {
           method: 'POST',
           url: `${BASE_URL}/payment`, // TODO - THIS SHOULD BE WIRED TO SERVER
           headers: {
-            access_token: localStorage.getItem('access_token')
+            access_token: localStorage.getItem('access_token'),
+            'ngrok-skip-browser-warning': 'any'
           }
         })
         this.payment = data
-        localStorage.setItem('isPremium', true)
-        console.log(data)
+        console.log('masuk kesini gaa?')
+        localStorage.setItem('isPremium', true) 
       } catch (error) {
         console.log(error.response.data)
       }
@@ -290,7 +301,7 @@ export const useMainStore = defineStore('main', {
         bodyFormData.append('image', img[0])
         let {data} = await axios({
           method: 'POST',
-          url: 'http://localhost:3000/templates/upload-images',
+          url: `${BASE_URL}/templates/upload-images`,
           data: bodyFormData,
           headers: { 
             access_token: localStorage.getItem('access_token'),
@@ -410,6 +421,21 @@ export const useMainStore = defineStore('main', {
       }
     },
     async editPersonalDetail(formData) {},
+    async getMyTemplates() {
+      try {
+        let {data} = await axios({
+          method: 'get',
+          url: `${BASE_URL}/public/mytemplates`,
+          headers: {
+            access_token: localStorage.getItem('access_token'),
+            'ngrok-skip-browser-warning': 'any'
+          }
+        })
+        this.myTemplates = data
+      } catch (err) {
+        console.log(err);
+      }
+    }
     
   }
 })
