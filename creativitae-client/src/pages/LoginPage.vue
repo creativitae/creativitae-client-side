@@ -31,6 +31,7 @@ export default {
       this.doLinkedinLogin()
     },
     callback(response) {
+      console.log(response.credential)
       this.googleLogin(response)
     }
   }

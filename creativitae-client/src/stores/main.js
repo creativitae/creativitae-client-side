@@ -72,7 +72,6 @@ export const useMainStore = defineStore('main', {
         localStorage.setItem('isPremium', data.isPremium)
         localStorage.setItem('email', data.email)
         localStorage.setItem('username', data.username)
-        console.log(data);
         this.loggedIn = true
         this.router.push('/')
         await Toast.fire({
@@ -112,7 +111,10 @@ export const useMainStore = defineStore('main', {
         console.log('ini masuk dolinkedinlogin')
         let { data } = await axios({
           method: 'get',
-          url: `${BASE_URL}/users/linkedin-request-auth`
+          url: `${BASE_URL}/users/linkedin-request-auth`,
+          headers: {
+            "ngrok-skip-browser-warning":"any"
+          }
         })
         window.open(data.url, '_blank')
       } catch (err) {
