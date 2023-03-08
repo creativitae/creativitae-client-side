@@ -115,7 +115,7 @@ export default {
                     <div v-if="isPremium === 'false'"
                         class="relative flex flex-col bg-red-600 py-8 px-5 sm:rounded-2xl">
                         <p class="flex items-center justify-center"><span class="text-[2.5rem] leading-none text-white">IDR.
-                                <span class="font-bold">30.000,00</span></span><span class="ml-3 text-sm"><span
+                                <span class="font-bold">15.000,00</span></span><span class="ml-3 text-sm"><span
                                     class="font-semibold text-white">one-time payment</span><br><span
                                     class="text-slate-500"></span></span></p>
                         <p class="order-last -mx-1 mt-4 flex justify-center text-sm leading-6 text-white sm:space-x-2">
