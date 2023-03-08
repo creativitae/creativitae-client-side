@@ -13,8 +13,8 @@ const Toast = Swal.mixin({
   timerProgressBar: true
 })
 
-const BASE_URL = 'http://localhost:3000'
-// const BASE_URL = `https://5790-139-228-111-126.ap.ngrok.io`
+// const BASE_URL = 'http://localhost:3000'
+const BASE_URL = `https://5790-139-228-111-126.ap.ngrok.io`
 
 export const useMainStore = defineStore('main', {
   state: () => {
@@ -25,17 +25,28 @@ export const useMainStore = defineStore('main', {
       emailLinkedin: {},
       templates: [],
       userPremium: {},
-      isPremium: localStorage.getItem("isPremium")
+      isPremium: localStorage.getItem('isPremium'),
       preview: null,
       image: null,
       preview_list: [],
-      uploadedProfilePicture: 'https://source.unsplash.com/y9L5-wmifaY',
+      uploadedProfilePicture: '',
       fileName: {},
-      outputServer: {}
+      outputServer: {},
+      activeTemplate: {},
+      uploadedCV: ''
     }
   },
 
-  getters: {},
+  getters: {
+    getCVLink(state) {
+      return {
+        url: state.uploadedCV
+      }
+    },
+    getUploadedPP(state) {
+      return state.uploadedProfilePicture
+    }
+  },
 
   actions: {
     async doRegister(formData) {
@@ -60,7 +71,6 @@ export const useMainStore = defineStore('main', {
         })
       }
     },
-
     async doLogin(formData) {
       try {
         console.log(formData)
@@ -73,6 +83,8 @@ export const useMainStore = defineStore('main', {
         localStorage.setItem('isPremium', data.isPremium)
         localStorage.setItem('email', data.email)
         localStorage.setItem('username', data.username)
+        localStorage.setItem('address', data.address)
+        localStorage.setItem('phoneNumber', data.phoneNumber)
         console.log(data)
         this.loggedIn = true
         this.router.push('/')
@@ -89,7 +101,6 @@ export const useMainStore = defineStore('main', {
         })
       }
     },
-
     async doLogout() {
       try {
         localStorage.clear()
@@ -104,7 +115,6 @@ export const useMainStore = defineStore('main', {
         console.log(error)
       }
     },
-
     async doLinkedinLogin() {
       try {
         console.log('ini masuk dolinkedinlogin')
@@ -120,7 +130,6 @@ export const useMainStore = defineStore('main', {
         console.log(err)
       }
     },
-
     async doLinkedinAuth(code) {
       try {
         let { data } = await axios({
@@ -137,7 +146,6 @@ export const useMainStore = defineStore('main', {
         console.log(err)
       }
     },
-
     async LinkedinGetEmail(code) {
       console.log(code, 'ini code')
       try {
@@ -154,7 +162,6 @@ export const useMainStore = defineStore('main', {
         console.log(error)
       }
     },
-
     async LinkedinGetMe(code) {
       try {
         let { data } = await axios({
@@ -200,7 +207,6 @@ export const useMainStore = defineStore('main', {
         console.log(err)
       }
     },
-
     async xenditPayment() {
       try {
         const data = await axios({
@@ -217,7 +223,6 @@ export const useMainStore = defineStore('main', {
         console.log(error.response.data)
       }
     },
-
     async fetchTemplates() {
       try {
         let { data } = await axios({
@@ -228,14 +233,15 @@ export const useMainStore = defineStore('main', {
             'ngrok-skip-browser-warning': 'any'
           }
         })
-        console.log(data)
-
-        this.templates = data
+        let converted = data.map(el => {
+          el.image = JSON.parse(el.image)
+          return el
+        })
+        this.templates = converted
       } catch (err) {
         console.log(err)
       }
     },
-
     async singleImage() {
       try {
         let input = event.target
@@ -253,7 +259,6 @@ export const useMainStore = defineStore('main', {
         console.log(error)
       }
     },
-
     async multipleImage() {
       'masuk'
       try {
@@ -278,75 +283,133 @@ export const useMainStore = defineStore('main', {
         console.log(error)
       }
     },
-
     async getServer(img) {
       try {
         console.log(img[0], 'masuk 2')
         let bodyFormData = new FormData()
         bodyFormData.append('image', img[0])
-        let data = await axios({
+        let {data} = await axios({
           method: 'POST',
           url: 'http://localhost:3000/templates/upload-images',
           data: bodyFormData,
-          headers: { 'Content-Type': 'multipart/form-data' }
+          headers: { 
+            access_token: localStorage.getItem('access_token'),
+            'Content-Type': 'multipart/form-data'
+           }
         })
-        this.uploadedProfilePicture = data.url
+        // console.log(data.data[0], 'iniiiii');
+        this.uploadedProfilePicture = data.data[0].url
       } catch (error) {
         console.log(error)
       }
     },
-
-
     async uploadResult(img) {
       try {
-        let bodyFormData = new FormData()
-        bodyFormData.append('image', img)
-        let data = await axios({
-          method: 'POST',
-          url: 'http://localhost:3000/templates/upload-images',
-          data: bodyFormData,
+        let {data} = await axios({
+          method: 'post',
+          url: `${BASE_URL}/templates/uploadCV`,
           headers: {
-            access_token: localStorage.getItem('access_token'),
-            'Content-Type': 'multipart/form-data'
+            access_token: localStorage.getItem('access_token')
+          },
+          data: {
+            image: img
           }
         })
-        console.log('keluaran upload: ', data.url)
+        console.log(data.url);
+        this.uploadedCV = data.url
       } catch (error) {
-        console.log(error)
+        console.log(error, 'eror client')
       }
     },
     async googleLogin(response) {
       try {
         let { data } = await axios({
           method: 'post',
-          url: `http://localhost:3000/google-login`,
+          url: `${BASE_URL}/google-login`,
           data: {
             googleToken: response.credential
           },
           headers: {
-            "ngrok-skip-browser-warning":"any"
+            'ngrok-skip-browser-warning': 'any'
           }
         })
-        localStorage.setItem("access_token", data.access_token);
-        localStorage.setItem("username", data.email);
-        localStorage.setItem("isPremium", data.isPremium);
+        localStorage.setItem('access_token', data.access_token)
+        localStorage.setItem('username', data.email)
+        localStorage.setItem('isPremium', data.isPremium)
         this.loggedIn = true
         this.router.push('/')
         Toast.fire({
-          title: "Great!",
+          title: 'Great!',
           text: `Welcome back, ${data.username}`,
-          icon: "success",
-          confirmButtonText: "Cool!",
-        });
-        localStorage.setItem("username", data.username);
+          icon: 'success',
+          confirmButtonText: 'Cool!'
+        })
+        localStorage.setItem('username', data.username)
       } catch (error) {
         Toast.fire({
-          title: "Error!",
+          title: 'Error!',
           html: `${error.response.data.message}`,
-          icon: "error",
-          confirmButtonText: "Try again!",
-        });
+          icon: 'error',
+          confirmButtonText: 'Try again!'
+        })
       }
     },
+    async addTemplateToMyList(templateId) {
+      try {
+        await axios({
+          method: 'post',
+          url: `${BASE_URL}/public/mytemplates/${templateId}`,
+          headers: {
+            access_token: localStorage.getItem('access_token')
+          }
+        })
+      } catch (err) {
+        
+      }
+    },
+    async getTemplateById(templateId) {
+      try {
+        let {data} = await axios({
+          method: 'get',
+          url: `${BASE_URL}/templates/${templateId}`,
+          headers: {
+            access_token: localStorage.getItem('access_token')
+          }
+        })
+        this.activeTemplate = data
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async getPersonalDetail(formData) {
+      try {
+        await axios({
+          method: 'get',
+          url: `${BASE_URL}/public/mydetail`,
+          headers: {
+            access_token: localStorage.getItem('access_token')
+          },
+          data: formData
+        })
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async postPersonalDetail(formData) {
+      try {
+        await axios({
+          method: 'post',
+          url: `${BASE_URL}/public/mydetail`,
+          headers: {
+            access_token: localStorage.getItem('access_token')
+          },
+          data: formData
+        })
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async editPersonalDetail(formData) {},
+    
   }
 })

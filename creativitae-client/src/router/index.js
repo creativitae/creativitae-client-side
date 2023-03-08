@@ -7,7 +7,7 @@ import RegisterPage from '../pages/RegisterPage.vue'
 import GetPremium from '../pages/GetPremiumPage.vue'
 import Callbacks from '../components/Callback.vue'
 import LoginLinkedin from '../components/LoginLinkedIn.vue'
-import Resume1 from '../templates/Resume1.vue'
+import CreateCvPage from '../pages/CreateCvPage.vue'
 import UploadImg from '../components/UploadImg.vue'
 import AboutPage from '../pages/AboutPage.vue'
 import DetailCVPage from '../pages/DetailCVPage.vue'
@@ -48,8 +48,8 @@ const router = createRouter({
       component: LoginLinkedin
     },
     {
-      path: '/create-cv',
-      component: Resume1
+      path: '/create-cv/:templateId',
+      component: CreateCvPage
     },
     {
       path: '/uploadImg',

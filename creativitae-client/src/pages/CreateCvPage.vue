@@ -2,14 +2,11 @@
 import { mapActions, mapState, mapWritableState } from 'pinia';
 import { useMainStore } from '../stores/main';
 import { TransitionFade } from '@morev/vue-transitions';
+import { saveAs } from 'file-saver';
+import { jsPDF } from "jspdf";
 import UploadImg from '../components/UploadImg.vue'
 import ShareButton from '../components/ShareButton.vue';
-import domtoimage from "dom-to-image-more";
-import { saveAs } from 'file-saver';
 import html2canvas from 'html2canvas';
-import { jsPDF } from "jspdf";
-
-
 import interact from "interactjs";
 export default {
   components: {
@@ -63,13 +60,13 @@ export default {
       formData: {
         fullName: '',
         title: '',
-        address: '',
-        phoneNumber: '',
-        profilePhoto: '',
+        address: localStorage.getItem('address'),
+        phoneNumber: localStorage.getItem('phoneNumber'),
+        profilePicture: '',
         summary: '',
-        socialMedia: [
+        socialMedias: [
           {
-            url: ''
+            url: localStorage.getItem('email')
           }
         ],
         workExperiences: [
@@ -117,23 +114,26 @@ export default {
       },
       skill: '',
       language: '',
-
-
     }
   },
   computed: {
-    ...mapState(useMainStore, ['uploadedProfilePicture']),
+    ...mapState(useMainStore, ['uploadedProfilePicture','activeTemplate', 'getUploadedPP']),
     getSkills() {
       this.formData.skills = this.skill.trim().split(',').map(el => el.trim());
     },
     getLanguages() {
       this.formData.languages = this.language.trim().split(',').map(el => el.trim());
     },
+    setProfilePicture() {
+      console.log(this.getUploadedPP, 'thisss');
+      this.formData.profilePicture = this.getUploadedPP
+    }
 
   },
   created() {
     this.getSkills
     this.getLanguages
+    this.getTemplateById(this.$route.params.templateId)
   },
   watch: {
     skill: function () {
@@ -147,7 +147,13 @@ export default {
     this.initInteract()
   },
   methods: {
-    ...mapActions(useMainStore, ['uploadResult']),
+    ...mapActions(useMainStore, ['uploadResult', 'getTemplateById', 'addTemplateToMyList', 'postPersonalDetail']),
+    handleForm(formData) {
+      console.log(formData);
+      this.postPersonalDetail(formData)
+      this.addTemplateToMyList(this.$route.params.templateId)
+      this.toggleForm()
+    },
     initInteract() {
       interact('.experience-section').draggable({
         listeners: {
@@ -198,7 +204,7 @@ export default {
       await html2canvas(node, { useCORS: true }).then(function (canvas) {
         dataUrl = canvas.toDataURL('image/png')
       });
-      // this.imagebuatan = dataUrl
+
       this.uploadResult(dataUrl)
     },
     downloadPNG() {
@@ -256,7 +262,7 @@ export default {
 
         <!-- IMAGES -->
         <div class="photo w-[122px] h-[122px] rounded-full absolute top-[40px] left-[44px] overflow-hidden">
-          <img :src="`${uploadedProfilePicture}`" class="object-cover" />
+          <img :src="getUploadedPP" class="object-cover" />
         </div>
 
         <!-- ABOUT ME -->
@@ -276,7 +282,7 @@ export default {
         <!-- SOCMED -->
         <div
           class="absolute top-[455px] left-[58px] font-thin text-white text-[0.6rem] w-[24%] h-fit  text-justify flex flex-col gap-y-[1px]">
-          <p v-for="i in formData.socialMedia" class="font-thin text-white text-[0.6rem] leading-3">{{ i.url }}</p>
+          <p v-for="i in formData.socialMedias" class="font-thin text-white text-[0.6rem] leading-3">{{ i.url }}</p>
         </div>
 
         <!-- SKILLS -->
@@ -400,9 +406,9 @@ export default {
       </div>
 
       <div class="div w-1/2 h-fit">
-        <button @click.prevent="toggleForm" v-if="showForm"
+        <button @click.prevent="handleForm(formData)" v-if="showForm"
           class="px-4 py-2 bg-theme-red w-full text-white font-bold rounded-xl drop-shadow-md hover:bg-red-400 transition-all mb-10">
-          Edit Mode
+          Submit Creation
         </button>
 
         <!-- MAIN FORM AREA -->
@@ -451,13 +457,13 @@ export default {
                   <div class="form-content flex flex-col w-[80%] py-1 relative">
                     <label class="text-left font-bold mb-1 text-theme-red">Social Media</label>
 
-                    <button v-if="formData.socialMedia.length < 5"
-                      @click.prevent="formData.socialMedia.push({ ...socmedTemp })"
+                    <button v-if="formData.socialMedias.length < 5"
+                      @click.prevent="formData.socialMedias.push({ ...socmedTemp })"
                       class="group-hover:scale-125 group-hover:text-white transition-all text-white font-bold absolute top-[32px] right-[-50px] px-3 py-1 bg-theme-red rounded-lg hover:bg-red-400">+</button>
 
-                    <div v-for="(item, i) in formData.socialMedia" class="div relative mb-4">
+                    <div v-for="(item, i) in formData.socialMedias" class="div relative mb-4">
 
-                      <button v-if="i !== 0" @click="deleteFormElement('socialMedia', i)"
+                      <button v-if="i !== 0" @click="deleteFormElement('socialMedias', i)"
                         class="group-hover:scale-125 group-hover:text-white transition-all text-white font-bold absolute top-[0px] right-[-50px] px-[13px] py-1 bg-theme-red rounded-lg hover:bg-red-400">-</button>
 
                       <input v-model="item.url" type="text" name="address" class="px-4 py-1 rounded-md border w-full"
