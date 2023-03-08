@@ -25,7 +25,7 @@ export const useMainStore = defineStore('main', {
       emailLinkedin: {},
       templates: [],
       userPremium: {},
-      isPremium: localStorage.getItem("isPremium")
+      isPremium: localStorage.getItem("isPremium"),
       preview: null,
       image: null,
       preview_list: [],
