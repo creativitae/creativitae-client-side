@@ -228,7 +228,6 @@ export const useMainStore = defineStore('main', {
           }
         })
         this.payment = data
-        console.log('masuk kesini gaa?')
         localStorage.setItem('isPremium', true) 
       } catch (error) {
         console.log(error.response.data)
